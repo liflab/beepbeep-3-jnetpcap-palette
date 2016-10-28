@@ -6,14 +6,7 @@ import java.util.List;
 
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
-import org.jnetpcap.packet.JMemoryPacket;
-import org.jnetpcap.packet.JPacket;
-import org.jnetpcap.packet.PcapPacket;
-import org.jnetpcap.packet.PcapPacketHandler;
-import org.jnetpcap.protocol.JProtocol;
-import org.jnetpcap.protocol.lan.Ethernet;
-import org.jnetpcap.protocol.network.Ip4;
-import org.jnetpcap.protocol.tcpip.Tcp;
+import org.jnetpcap.packet.*;
 
 public class ClassicPcapExample {
 
