@@ -18,26 +18,7 @@ import org.jnetpcap.protocol.tcpip.Tcp;
 public class ClassicPcapExample {
 
 	public static void main(String[] args) {
-		JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID,
-				" 001801bf 6adc0025 4bb7afec 08004500 " + " 0041a983 40004006 d69ac0a8 00342f8c "
-						+ " ca30c3ef 008f2e80 11f52ea8 4b578018 " + " ffffa6ea 00000101 080a152e ef03002a "
-						+ " 2c943538 322e3430 204e4f4f 500d0a");
-
-		Ip4 ip = packet.getHeader(new Ip4());
-		Tcp tcp = packet.getHeader(new Tcp());
-
-		tcp.destination(80);
-
-		ip.checksum(ip.calculateChecksum());
-		tcp.checksum(tcp.calculateChecksum());
-		packet.scan(Ethernet.ID);
-
-		System.out.println(packet);
 		
-		classicExample();
-	}
-
-	static void classicExample() {
 		List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with
 		// NICs
 		StringBuilder errbuf = new StringBuilder(); // For any error msgs
@@ -110,5 +91,21 @@ public class ClassicPcapExample {
 		 * Last thing to do is close the pcap handle
 		 **************************************************************************/
 		pcap.close();
+		
+		/*JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID,
+				" 001801bf 6adc0025 4bb7afec 08004500 " + " 0041a983 40004006 d69ac0a8 00342f8c "
+						+ " ca30c3ef 008f2e80 11f52ea8 4b578018 " + " ffffa6ea 00000101 080a152e ef03002a "
+						+ " 2c943538 322e3430 204e4f4f 500d0a");
+
+		Ip4 ip = packet.getHeader(new Ip4());
+		Tcp tcp = packet.getHeader(new Tcp());
+
+		tcp.destination(80);
+
+		ip.checksum(ip.calculateChecksum());
+		tcp.checksum(tcp.calculateChecksum());
+		packet.scan(Ethernet.ID);
+
+		System.out.println(packet);*/
 	}
 }

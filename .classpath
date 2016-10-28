@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="dep/beepbeep-3.jar" sourcepath="/home/plfaure/Documents/LIF/beepbeep-3">
+	<classpathentry kind="lib" path="dep/beepbeep-3.jar" sourcepath="/home/theo/workspacebeepbeep/beepbeep-3/Core/src">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/home/plfaure/Documents/LIF/beepbeep-3/doc/"/>
+			<attribute name="javadoc_location" value="file:/home/theo/workspacebeepbeep/beepbeep-3/doc/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="dep/bullwinkle.jar" sourcepath="/home/plfaure/Documents/LIF/Bullwinkle">
@@ -12,9 +12,9 @@
 			<attribute name="javadoc_location" value="file:/home/plfaure/Documents/LIF/Bullwinkle/doc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="dep/jnetpcap.jar" sourcepath="/home/plfaure/Documents/LIF/jnetpcap-1.3.0/src">
+	<classpathentry kind="lib" path="dep/jnetpcap.jar" sourcepath="/home/theo/workspacebeepbeep/jnetpcap-1.3.0/jnetpcap-src-1.3.0-1/src">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/home/plfaure/Documents/LIF/jnetpcap-1.3.0/doc/"/>
+			<attribute name="javadoc_location" value="file:/home/theo/workspacebeepbeep/jnetpcap-1.3.0/jnetpcap-javadoc-1.3.0-1/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
