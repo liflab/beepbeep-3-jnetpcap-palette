@@ -5,8 +5,7 @@ import org.jnetpcap.packet.JPacket;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * 
- * @author plfaure
+ * Abstact function used to extract information from a network packet
  *
  */
 public abstract class PacketFunction extends UnaryFunction<JPacket, String> {

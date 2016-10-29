@@ -4,7 +4,7 @@ import ca.uqac.lif.cep.functions.*;
 
 /**
  * 
- * @author plfaure
+ * FunctionProcessor used to extract information from a network packet
  *
  */
 public class PacketReader extends FunctionProcessor {
