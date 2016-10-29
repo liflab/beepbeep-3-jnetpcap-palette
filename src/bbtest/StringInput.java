@@ -3,7 +3,6 @@ package bbtest;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
 
 public class StringInput extends SingleProcessor {
