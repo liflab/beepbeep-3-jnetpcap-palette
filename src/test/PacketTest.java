@@ -2,6 +2,7 @@ package test;
 
 import org.jnetpcap.packet.JMemoryPacket;
 import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.protocol.JProtocol;
 import org.jnetpcap.protocol.lan.Ethernet;
 import org.jnetpcap.protocol.network.Ip4;
@@ -15,11 +16,13 @@ public class PacketTest {
 						+ " ca30c3ef 008f2e80 11f52ea8 4b578018 " + " ffffa6ea 00000101 080a152e ef03002a "
 						+ " 2c943538 322e3430 204e4f4f 500d0a");
 
+		PcapPacket pp;
+		
 		Ip4 ip = packet.getHeader(new Ip4());
 		Tcp tcp = packet.getHeader(new Tcp());
 
 		tcp.destination(80);
-
+		
 		ip.checksum(ip.calculateChecksum());
 		tcp.checksum(tcp.calculateChecksum());
 		packet.scan(Ethernet.ID);
