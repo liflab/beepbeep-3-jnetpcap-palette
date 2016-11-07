@@ -9,8 +9,8 @@ import org.jnetpcap.protocol.tcpip.Tcp;
  */
 public class GetDestinationPort extends PacketFunction {
 
-	public GetDestinationPort(Class<JPacket> input, Class<String> output) {
-		super(input, output);
+	public GetDestinationPort() {
+		super();
 	}
 
 	/**

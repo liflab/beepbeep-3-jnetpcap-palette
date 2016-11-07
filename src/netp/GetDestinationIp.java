@@ -10,8 +10,8 @@ import org.jnetpcap.protocol.network.Ip4;
  */
 public class GetDestinationIp extends PacketFunction {
 
-	public GetDestinationIp(Class<JPacket> input, Class<String> output) {
-		super(input, output);
+	public GetDestinationIp() {
+		super();
 	}
 
 	/**

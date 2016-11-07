@@ -10,8 +10,8 @@ import org.jnetpcap.protocol.network.Ip4;
  */
 public class GetSourceIp extends PacketFunction {
 
-	public GetSourceIp(Class<JPacket> input, Class<String> output) {
-		super(input, output);
+	public GetSourceIp() {
+		super();
 	}
 
 	/**

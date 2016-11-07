@@ -15,8 +15,8 @@ public abstract class PacketFunction extends UnaryFunction<JPacket, String> {
 	 * @param input The input JPacket element of the function
 	 * @param output The String output of the function
 	 */
-	public PacketFunction(Class<JPacket> input, Class<String> output) {
-		super(input, output);
+	public PacketFunction() {
+		super(JPacket.class,  String.class);
 	}
 	
 }

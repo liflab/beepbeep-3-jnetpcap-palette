@@ -9,8 +9,8 @@ import org.jnetpcap.protocol.tcpip.Tcp;
  */
 public class GetSourcePort extends PacketFunction {
 
-	public GetSourcePort(Class<JPacket> input, Class<String> output) {
-		super(input, output);
+	public GetSourcePort() {
+		super();
 	}
 
 	/**
