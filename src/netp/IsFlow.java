@@ -14,7 +14,7 @@ public class IsFlow extends SingleProcessor{
 	protected String sourceFilter, destinationFilter;
 	
 	public IsFlow(String sourceIp, String destinationIp) {
-		super(1, 1);
+		super(1, 2);
 		sourceFilter = sourceIp;
 		destinationFilter = destinationIp;
 	}

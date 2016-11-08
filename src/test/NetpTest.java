@@ -20,6 +20,7 @@ public class NetpTest {
 		
 		Filter filter = new Filter();
 		Connector.connect(isFlow, filter, 0, 0);
+		Connector.connect(isFlow, filter, 1, 1);
 		
 		PacketReader srcIp = new PacketReader(new GetSourceIp());
 		Connector.connect(filter, srcIp, 0, 0);
