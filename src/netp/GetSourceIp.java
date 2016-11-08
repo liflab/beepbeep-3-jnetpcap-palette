@@ -5,7 +5,7 @@ import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.network.Ip4;
 
 /**
- * PacketFunction to get source from a network packet
+ * PacketFunction to get source IP from a network packet
  *
  */
 public class GetSourceIp extends PacketFunction {
@@ -15,7 +15,7 @@ public class GetSourceIp extends PacketFunction {
 	}
 
 	/**
-	 * @param packet The packet to extract source from
+	 * @param packet The packet to extract source IP from
 	 */
 	@Override
 	public String getValue(JPacket packet) {

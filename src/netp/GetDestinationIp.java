@@ -5,7 +5,7 @@ import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.network.Ip4;
 
 /**
- * PacketFunction to get destination from a network packet
+ * PacketFunction to get destination IP from a network packet
  *
  */
 public class GetDestinationIp extends PacketFunction {
@@ -15,7 +15,7 @@ public class GetDestinationIp extends PacketFunction {
 	}
 
 	/**
-	 * @param packet The packet to extract destination from
+	 * @param packet The packet to extract destination IP from
 	 */
 	@Override
 	public String getValue(JPacket packet) {

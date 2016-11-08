@@ -4,7 +4,7 @@ import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.protocol.tcpip.Tcp;
 
 /**
- * PacketFunction to get source from a network packet
+ * PacketFunction to get source port from a network packet
  *
  */
 public class GetSourcePort extends PacketFunction {
@@ -14,7 +14,7 @@ public class GetSourcePort extends PacketFunction {
 	}
 
 	/**
-	 * @param packet The packet to extract source from
+	 * @param packet The packet to extract source port from
 	 */
 	@Override
 	public String getValue(JPacket packet) {
