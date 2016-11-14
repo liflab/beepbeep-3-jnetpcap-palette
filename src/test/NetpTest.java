@@ -5,10 +5,10 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import netp.GetSourceIp;
 import netp.IsFlow;
 import netp.PacketReader;
 import netp.PacketSource;
+import netp.functions.packet.GetSourceIp;
 
 public class NetpTest {
 

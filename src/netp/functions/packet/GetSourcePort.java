@@ -1,4 +1,4 @@
-package netp;
+package netp.functions.packet;
 
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.protocol.tcpip.Tcp;
