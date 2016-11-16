@@ -18,8 +18,8 @@ public class GetFlowSize extends FlowFunction {
 	 * @param flow The flow to extract the packet number from
 	 */
 	@Override
-	public String getValue(JFlow flow) {
-		return Integer.toString(flow.size());
+	public Integer getValue(JFlow flow) {
+		return flow.size();
 	}
 
 }
