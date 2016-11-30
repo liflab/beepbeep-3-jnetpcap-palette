@@ -2,6 +2,7 @@ package netp.functions.packet;
 
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.protocol.tcpip.Tcp;
+import org.jnetpcap.protocol.tcpip.Udp;
 
 /**
  * PacketFunction to get source port from a network packet
@@ -17,10 +18,14 @@ public class GetSourcePort extends PacketFunction {
 	 * @param packet The packet to extract source port from
 	 */
 	@Override
-	public String getValue(JPacket packet) {
+	public Integer getValue(JPacket packet) {
 		Tcp tcp = new Tcp();
+		Udp udp = new Udp();
 		if (packet.hasHeader(tcp)) {
-			return Integer.toString(tcp.source());
+			return tcp.source();
+		}
+		if (packet.hasHeader(udp)) {
+			return udp.source();
 		}
 		return null;
 	}

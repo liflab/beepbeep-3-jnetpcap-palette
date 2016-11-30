@@ -4,7 +4,7 @@ import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.Payload;
 
 /**
- * PacketFunction to get payload packet lenght of a network packet
+ * PacketFunction to get payload packet lenght of a network packet (in bytes)
  *
  */
 public class GetPayloadLength extends PacketFunction {
@@ -14,13 +14,13 @@ public class GetPayloadLength extends PacketFunction {
 	}
 
 	/**
-	 * @param packet The packet to extract payload length from
+	 * @param packet The packet to extract payload length (in bytes) from
 	 */
 	@Override
-	public String getValue(JPacket packet) {
+	public Integer getValue(JPacket packet) {
 		Payload payload = new Payload();
 		if (packet.hasHeader(payload)) {
-			return Integer.toString(payload.getLength());
+			return payload.getLength();
 		}
 		return null;
 	}

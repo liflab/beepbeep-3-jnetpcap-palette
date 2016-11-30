@@ -3,7 +3,7 @@ package netp.functions.packet;
 import org.jnetpcap.packet.JPacket;
 
 /**
- * PacketFunction to get a network packet size
+ * PacketFunction to get a network packet size (in bytes)
  *
  */
 public class GetPacketSize extends PacketFunction {
@@ -13,11 +13,11 @@ public class GetPacketSize extends PacketFunction {
 	}
 
 	/**
-	 * @param packet The packet to extract the size length from
+	 * @param packet The packet to extract the size length (in bytes) from
 	 */
 	@Override
-	public String getValue(JPacket packet) {
-		return Integer.toString(packet.size());
+	public Integer getValue(JPacket packet) {
+		return packet.size();
 	}
 
 }

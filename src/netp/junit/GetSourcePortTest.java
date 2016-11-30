@@ -9,33 +9,33 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketReader;
 import netp.PacketSource;
-import netp.functions.packet.*;
+import netp.functions.packet.GetSourcePort;
 
-public class GetDestinationIpTest {
+public class GetSourcePortTest {
 
 	@Test
-	public void getDestinationIpTest() {
+	public void getSourcePortTest() {
 		PacketSource source = new PacketSource("test.pcap");
 
-		PacketReader destIp = new PacketReader(new GetDestinationIp());
+		PacketReader srcPort = new PacketReader(new GetSourcePort());
 		try {
-			Connector.connect(source, destIp, 0, 0);
+			Connector.connect(source, srcPort, 0, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(destIp, sink, 0, 0);
+			Connector.connect(srcPort, sink, 0, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		source.push();
-		String output = (String) sink.remove()[0];
+		Integer output = (Integer) sink.remove()[0];
 		System.out.println(output);
 		
-		String expected = "230.0.0.1";
+		Integer expected = 50696;
 		assertEquals(expected, output);
 	}
 
