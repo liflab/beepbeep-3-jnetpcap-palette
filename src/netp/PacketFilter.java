@@ -59,8 +59,8 @@ public class PacketFilter extends SingleProcessor {
 	}
 
 	/**
-	 * Adds a source IP to allow through the filter.
-	 * If the IP list is empty, all IPs pass through.
+	 * Adds a source IP to allow through the filter. If the IP list is empty,
+	 * all IPs pass through.
 	 * 
 	 * @param src
 	 *            IP address in string form (e.g. "192.168.0.1")
@@ -76,8 +76,8 @@ public class PacketFilter extends SingleProcessor {
 	}
 
 	/**
-	 * Remove a source IP from the filter.
-	 * If the IP list is empty, all IPs pass through.
+	 * Remove a source IP from the filter. If the IP list is empty, all IPs pass
+	 * through.
 	 * 
 	 * @param src
 	 *            IP address in string form (e.g. "192.168.0.1")
@@ -93,8 +93,8 @@ public class PacketFilter extends SingleProcessor {
 	}
 
 	/**
-	 * Adds a destination IP to allow through the filter.
-	 * If the IP list is empty, all IPs pass through.
+	 * Adds a destination IP to allow through the filter. If the IP list is
+	 * empty, all IPs pass through.
 	 * 
 	 * @param dst
 	 *            IP address in string form (e.g. "192.168.0.1")
@@ -110,8 +110,8 @@ public class PacketFilter extends SingleProcessor {
 	}
 
 	/**
-	 * Remove a destination IP from the filter.
-	 * If the IP list is empty, all IPs pass through.
+	 * Remove a destination IP from the filter. If the IP list is empty, all IPs
+	 * pass through.
 	 * 
 	 * @param dst
 	 *            IP address in string form (e.g. "192.168.0.1")
@@ -237,7 +237,8 @@ public class PacketFilter extends SingleProcessor {
 			}
 		}
 
-		if (!destinationIp.isEmpty()) { // allow all ips if destinationIp is empty
+		if (!destinationIp.isEmpty()) { // allow all ips if destinationIp is
+										// empty
 			found = false;
 			for (byte[] ip : destinationIp) {
 				if (Arrays.equals(ip, ip4.destination())) {
@@ -255,11 +256,19 @@ public class PacketFilter extends SingleProcessor {
 		out[0] = packet;
 		return wrapVector(out);
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public Processor clone() {
-		// TODO Auto-generated method stub
-		return null;
+	public PacketFilter clone() {
+		PacketFilter clone = new PacketFilter();
+		clone.protocol = protocol;
+		clone.sourceIp = (ArrayList<byte[]>) sourceIp.clone();
+		clone.sourcePortLow = sourcePortLow;
+		clone.sourcePortHigh = sourcePortHigh;
+		clone.destinationIp = (ArrayList<byte[]>) destinationIp.clone();
+		clone.destinationPortLow = destinationPortLow;
+		clone.destinationPortHigh = destinationPortHigh;
+		return clone;
 	}
 
 }
