@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Queue;
 
 import org.jnetpcap.packet.JPacket;
@@ -14,12 +15,20 @@ import org.jnetpcap.protocol.tcpip.Udp;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
-public class PacketFilter extends SingleProcessor{
+/**
+ * Discards packets from an input trace based on a selection criterion. These
+ * criterion are net protocol, source and destination IP, and source and
+ * destination port. A packet must satisfy ALL criterion to pass through the
+ * filter.
+ *
+ */
+public class PacketFilter extends SingleProcessor {
 
 	public static final int TCP = 6;
 	public static final int UDP = 17;
 	public static final int ANY_PROTOCOL = 0;
-	
+
+	// filter criterion
 	private int protocol;
 	private ArrayList<byte[]> sourceIp;
 	private int sourcePortLow;
@@ -28,12 +37,16 @@ public class PacketFilter extends SingleProcessor{
 	private int destinationPortLow;
 	private int destinationPortHigh;
 
+	// variable for inside use only
 	private Ip4 ip4;
 	int tmpProtocol;
 	private Tcp tcp;
 	private Udp udp;
 	private boolean found;
-	
+
+	/**
+	 * Instantiates a default filter that allows all packets through
+	 */
 	public PacketFilter() {
 		super(1, 1);
 		protocol = ANY_PROTOCOL;
@@ -41,75 +54,141 @@ public class PacketFilter extends SingleProcessor{
 		sourcePortHigh = 65535;
 		destinationPortLow = 0;
 		destinationPortHigh = 65535;
+		sourceIp = new ArrayList<byte[]>();
+		destinationIp = new ArrayList<byte[]>();
 	}
-	
-	public void addSourceIp(String src){
+
+	/**
+	 * Adds a source IP to allow through the filter. If the IP list is empty,
+	 * all IPs pass through.
+	 * 
+	 * @param src
+	 *            IP address in string form (e.g. "192.168.0.1")
+	 */
+	public void addSourceIp(String src) {
 		try {
 			InetAddress ip = InetAddress.getByName(src);
-			byte[] b= ip.getAddress();
+			byte[] b = ip.getAddress();
 			sourceIp.add(b);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void removeSourceIp(String src){
+
+	/**
+	 * Remove a source IP from the filter. If the IP list is empty, all IPs pass
+	 * through.
+	 * 
+	 * @param src
+	 *            IP address in string form (e.g. "192.168.0.1")
+	 */
+	public void removeSourceIp(String src) {
 		try {
 			InetAddress ip = InetAddress.getByName(src);
-			byte[] b= ip.getAddress();
+			byte[] b = ip.getAddress();
 			sourceIp.remove(b);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void addDestinationIp(String dst){
+
+	/**
+	 * Adds a destination IP to allow through the filter. If the IP list is
+	 * empty, all IPs pass through.
+	 * 
+	 * @param dst
+	 *            IP address in string form (e.g. "192.168.0.1")
+	 */
+	public void addDestinationIp(String dst) {
 		try {
 			InetAddress ip = InetAddress.getByName(dst);
-			byte[] b= ip.getAddress();
+			byte[] b = ip.getAddress();
 			destinationIp.add(b);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void removeDestinationIp(String dst){
+
+	/**
+	 * Remove a destination IP from the filter. If the IP list is empty, all IPs
+	 * pass through.
+	 * 
+	 * @param dst
+	 *            IP address in string form (e.g. "192.168.0.1")
+	 */
+	public void removeDestinationIp(String dst) {
 		try {
 			InetAddress ip = InetAddress.getByName(dst);
-			byte[] b= ip.getAddress();
+			byte[] b = ip.getAddress();
 			destinationIp.remove(b);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setProtocol(int protocol){
+
+	/**
+	 * Set the protocol to allow through the filter. At the moment, only TCP and
+	 * UDP are supported.
+	 * 
+	 * @param protocol
+	 *            the protocol ID, or <code>PacketFilter.ANY_PROTOCOL</code> to
+	 *            allow all protocols
+	 */
+	public void setProtocol(int protocol) {
 		this.protocol = protocol;
 	}
-	
-	public void setSourcePort(int src){
+
+	/**
+	 * Set the source port to allow through the filter
+	 * 
+	 * @param src
+	 *            the port number
+	 */
+	public void setSourcePort(int src) {
 		sourcePortLow = src;
 		sourcePortHigh = src;
 	}
-	
-	public void setSourcePortRange(int low, int high){
+
+	/**
+	 * Set a range of source ports to allow through the filter
+	 * 
+	 * @param low
+	 *            the lower bound of the port range to allow
+	 * @param high
+	 *            the upper bound of the port range to allow
+	 */
+	public void setSourcePortRange(int low, int high) {
 		sourcePortLow = low;
 		sourcePortHigh = high;
 	}
-	
-	public void setDestinationPort(int dst){
+
+	/**
+	 * Set the destination port to allow through the filter
+	 * 
+	 * @param dst
+	 *            the port number
+	 */
+	public void setDestinationPort(int dst) {
 		destinationPortLow = dst;
 		destinationPortHigh = dst;
 	}
-	
-	public void setDestinationPortRange(int low, int high){
+
+	/**
+	 * Set a range of destination ports to allow through the filter
+	 * 
+	 * @param low
+	 *            the lower bound of the port range to allow
+	 * @param high
+	 *            the upper bound of the port range to allow
+	 */
+	public void setDestinationPortRange(int low, int high) {
 		destinationPortLow = low;
 		destinationPortHigh = high;
 	}
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs) {
-		JPacket packet = (JPacket)inputs[0];
+		JPacket packet = (JPacket) inputs[0];
 		ip4 = new Ip4(); // retrieve IP header
 		if (!packet.hasHeader(ip4)) {
 			return new ArrayDeque<Object[]>();
@@ -119,7 +198,7 @@ public class PacketFilter extends SingleProcessor{
 		if (protocol > 0 && ip4.type() != protocol) {
 			return new ArrayDeque<Object[]>();
 		}
-		
+
 		tmpProtocol = ip4.type();
 
 		// check source and destination ports
@@ -145,26 +224,31 @@ public class PacketFilter extends SingleProcessor{
 		}
 
 		// check source and destination IPs
-		found = false;
-		for (byte[] ip : sourceIp){
-			if (ip.equals(ip4.source())){
-				found = true;
-				break;
+		if (!sourceIp.isEmpty()) { // allow all ips if sourceIp is empty
+			found = false;
+			for (byte[] ip : sourceIp) {
+				if (Arrays.equals(ip, ip4.source())) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				return new ArrayDeque<Object[]>();
 			}
 		}
-		if (!found){
-			return new ArrayDeque<Object[]>();
-		}
-		
-		found = false;
-		for (byte[] ip : destinationIp){
-			if (ip.equals(ip4.destination())){
-				found = true;
-				break;
+
+		if (!destinationIp.isEmpty()) { // allow all ips if destinationIp is
+										// empty
+			found = false;
+			for (byte[] ip : destinationIp) {
+				if (Arrays.equals(ip, ip4.destination())) {
+					found = true;
+					break;
+				}
 			}
-		}
-		if (!found){
-			return new ArrayDeque<Object[]>();
+			if (!found) {
+				return new ArrayDeque<Object[]>();
+			}
 		}
 
 		// Packet went through the filter
@@ -172,11 +256,19 @@ public class PacketFilter extends SingleProcessor{
 		out[0] = packet;
 		return wrapVector(out);
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public Processor clone() {
-		// TODO Auto-generated method stub
-		return null;
+	public PacketFilter clone() {
+		PacketFilter clone = new PacketFilter();
+		clone.protocol = protocol;
+		clone.sourceIp = (ArrayList<byte[]>) sourceIp.clone();
+		clone.sourcePortLow = sourcePortLow;
+		clone.sourcePortHigh = sourcePortHigh;
+		clone.destinationIp = (ArrayList<byte[]>) destinationIp.clone();
+		clone.destinationPortLow = destinationPortLow;
+		clone.destinationPortHigh = destinationPortHigh;
+		return clone;
 	}
 
 }
