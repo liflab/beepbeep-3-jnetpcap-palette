@@ -16,26 +16,48 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.flow;
+package netp;
 
+import java.util.Queue;
 
 import org.jnetpcap.packet.JFlow;
 
-import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
 
-/**
- * Abstact function used to extract information from a network flow
- *
- */
-public abstract class FlowFunction extends UnaryFunction<JFlow, Object> {
-
-	/**
-	 * 
-	 * @param input The input JFlow element of the function
-	 * @param output The output of the function
-	 */
-	public FlowFunction() {
-		super(JFlow.class,  Object.class);
-	}
+public class FlowMaker extends SingleProcessor {
 	
+	private JFlow oldFlow;
+
+	public FlowMaker() {
+		super(1, 1);
+		oldFlow = null;
+	}
+
+	@Override
+	protected Queue<Object[]> compute(Object[] inputs) {
+		JFlow newFlow = (JFlow) inputs[0];
+		if (oldFlow == null) {
+			// if it is the first flow received, replace the old flow
+			oldFlow = newFlow;
+		}
+		if (oldFlow != newFlow) {
+			// if the two flows are different
+			JFlow flow = oldFlow;
+			oldFlow = newFlow;
+			
+			// return the old flow
+			Object[] out = new Object[1];
+			out[0] = flow;
+			return wrapVector(out);
+		}
+		return null;
+	}
+
+	@Override
+	public Processor clone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
