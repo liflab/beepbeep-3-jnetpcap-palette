@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp;
+package netp.filters;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
