@@ -30,31 +30,36 @@ import netp.functions.flow.FlowFunction;
 import netp.functions.flow.GetFlowSize;
 
 /**
- * Return true if a flow has five packets or more
+ * Return true if a flow has two packets or more
  * In this example we create a new FlowFunction
  */
 public class FlowSizeComparison {
 	
-	/**
-	 * FlowFunction to know if a packet has five (or more) packets, or not
-	 */
-	private class HasFivePacketsOrMore extends FlowFunction {
-
-		/**
-		 * @param flow The flow we want to compare de size
-		 */
-		@Override
-		public Boolean getValue(JFlow flow) {
-			GetFlowSize flowSize = new GetFlowSize();
-			Integer size = flowSize.getValue(flow);
-			if (size >= 5) {
-				return true;
-			}
-			return false;
-		}
-	}
-
 	public static void main(String[] args) throws ConnectorException {
+		
+		/**
+		 * FlowFunction to know if a packet has two (or more) packets, or not
+		 */
+		class HasTwoPacketsOrMore extends FlowFunction {
+			
+			public HasTwoPacketsOrMore() {
+				super();
+			}
+
+			/**
+			 * @param flow The flow we want to compare the size
+			 */
+			@Override
+			public Boolean getValue(JFlow flow) {
+				GetFlowSize flowSize = new GetFlowSize();
+				Integer size = flowSize.getValue(flow);
+				if (size >= 2) {
+					return true;
+				}
+				return false;
+			}
+		}
+		
 		PacketSource source = new PacketSource("test.pcap");
 
 		FlowTransmitter flow = new FlowTransmitter();
@@ -64,7 +69,7 @@ public class FlowSizeComparison {
 			e.printStackTrace();
 		}
 		
-		FlowReader hasFiveOrMore = new FlowReader(new HasFivePacketsOrMore());
+		FlowReader hasFiveOrMore = new FlowReader(new HasTwoPacketsOrMore());
 		try {
 			Connector.connect(flow, hasFiveOrMore, 0, 0);
 		} catch (ConnectorException e) {
@@ -81,10 +86,8 @@ public class FlowSizeComparison {
 		// compute the first 15 packets
 		for (int i = 0; i < 15; i++) {
 			source.push();
-			Integer output = (Integer) sink.remove()[0];
-			if (output != null) // only display the packets that went through
-				// the filters
-				System.out.println(i + ": " + output);
+			Boolean output = (Boolean) sink.remove()[0];
+			System.out.println(i + ": " + output);
 		}
 	}
 

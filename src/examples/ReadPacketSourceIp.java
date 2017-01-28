@@ -51,9 +51,7 @@ public class ReadPacketSourceIp {
 		for (int i = 0; i < 15; i++) {
 			source.push();
 			String output = (String) sink.remove()[0];
-			if (output != null) // only display the packets that went through
-				// the filters
-				System.out.println(i + ": " + output);
+			System.out.println(i + ": " + output);
 		}
 	}
 }
