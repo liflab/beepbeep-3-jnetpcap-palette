@@ -29,8 +29,9 @@ import netp.functions.packet.GetSourceIp;
 
 /**
  * Displays the source IP only from UDP packets containing byte 24 and 99
+ * This exemple uses PacketFilter and PayloadFilter classes
  */
-public class FilterExemple {
+public class ReadFilteredPacketSourceIp {
 	
 	public static void main(String[] args) throws ConnectorException {
 

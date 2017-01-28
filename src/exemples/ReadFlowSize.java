@@ -19,8 +19,8 @@
 package exemples;
 
 /**
- * Displays the source and destination IP only from TCP
+ * Displays the size of each arriving flow
  */
-public class PacketExemple {
+public class ReadFlowSize {
 
 }

@@ -31,6 +31,9 @@ import ca.uqac.lif.cep.SingleProcessor;
 /**
  * Places input packets in JFlowMap (packets are thus sorted by flow), then
  * outputs its corresponding flow.
+ * 
+ * WARNING: THE OUTPUT FLOW CAN (and might) BE INCOMPLETE,
+ * 			THE UPDATED FLOW WILL BE OUTPUTED AFTER EACH NEW PACKET ARRIVAL
  */
 
 public class FlowMaker extends SingleProcessor {
