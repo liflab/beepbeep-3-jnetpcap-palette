@@ -27,8 +27,8 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import netp.PacketFilter;
 import netp.PacketSource;
+import netp.filters.PacketFilter;
 
 public class PacketFilterTest {
 
