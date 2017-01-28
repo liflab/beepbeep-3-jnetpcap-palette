@@ -33,7 +33,7 @@ public class GetFlowSize extends FlowFunction {
 	}
 	
 	/**
-	 * @param flow The flow to extract the packet number from
+	 * @param flow The flow to extract the number of packets from
 	 */
 	@Override
 	public Integer getValue(JFlow flow) {

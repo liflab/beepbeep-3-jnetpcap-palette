@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package exemples;
+package examples;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -29,7 +29,7 @@ import netp.functions.packet.GetSourceIp;
 
 /**
  * Displays the source IP only from UDP packets containing byte 24 and 99
- * This exemple uses PacketFilter and PayloadFilter classes
+ * This example uses PacketFilter and PayloadFilter classes
  */
 public class ReadFilteredPacketSourceIp {
 	

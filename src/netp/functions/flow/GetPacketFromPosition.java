@@ -22,7 +22,7 @@ import org.jnetpcap.packet.JFlow;
 import org.jnetpcap.packet.JPacket;
 
 /**
- * FlowFunction to get a network packet from a flow packet and his position
+ * FlowIntegerFunction to get a network packet from a flow packet and his position
  *
  */
 public class GetPacketFromPosition extends FlowIntegerFunction {

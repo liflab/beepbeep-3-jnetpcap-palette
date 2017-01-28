@@ -20,44 +20,52 @@ package netp;
 
 import java.util.Queue;
 
+import org.jnetpcap.packet.JFlowKey;
+import org.jnetpcap.packet.JFlowMap;
 import org.jnetpcap.packet.JPacket;
-import org.jnetpcap.packet.format.FormatUtils;
-import org.jnetpcap.protocol.network.Ip4;
+import org.jnetpcap.packet.PcapPacket;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
-public class IsFlow extends SingleProcessor{
+/**
+ * Places input packets in a JFlowMap (packets are thus sorted by flow), then
+ * outputs its corresponding flow. This flow is temporary, and will be output
+ * again each time a new packet is added to it.
+ */
+public class FlowTransmitter extends SingleProcessor {
 
-	protected String sourceFilter, destinationFilter;
-	
-	public IsFlow(String sourceIp, String destinationIp) {
-		super(1, 2);
-		sourceFilter = sourceIp;
-		destinationFilter = destinationIp;
+	private JFlowMap flowMap;
+	private JPacket packet;
+	private JFlowKey key;
+
+	public FlowTransmitter() {
+		super(1, 1);
+		flowMap = new JFlowMap();
 	}
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs) {
-		JPacket packet =(JPacket)inputs[0];
-		Object[] outputs = new Object[2];
-		outputs[0] = inputs[0];
-		outputs[1] = Boolean.FALSE;
-		Ip4 ip4 = new Ip4();
-		if (packet.hasHeader(ip4)) {
-			String src = FormatUtils.ip(ip4.source());
-			String dst = FormatUtils.ip(ip4.destination());
-			if (src.equals(sourceFilter) && dst.equals(destinationFilter)){
-				outputs[1] = Boolean.TRUE;
-			}
-		}
-		return wrapVector(outputs);
+		packet = (JPacket) inputs[0];
+
+		// store packet in flow map
+		flowMap.nextPacket((PcapPacket) packet, null);
+
+		// output flow
+		key = packet.getState().getFlowKey();
+		Object[] out = new Object[1];
+		out[0] = flowMap.get(key);
+		return wrapVector(out);
+
+		// TODO output flow only after a succession of packets from the same
+		// flow has ended.
 	}
 
 	@Override
 	public Processor clone() {
-		// TODO Auto-generated method stub
-		return null;
+		FlowTransmitter clone = new FlowTransmitter();
+		clone.flowMap = (JFlowMap) flowMap.clone();
+		return clone;
 	}
 
 }
