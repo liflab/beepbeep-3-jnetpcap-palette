@@ -20,38 +20,45 @@ package netp;
 
 import java.util.Queue;
 
-import org.jnetpcap.packet.JFlow;
+import org.jnetpcap.packet.JFlowKey;
+import org.jnetpcap.packet.JFlowMap;
+import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.PcapPacket;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
+/**
+ * Places input packets in JFlowMap (packets are thus sorted by flow), then
+ * outputs its corresponding flow.
+ */
+
 public class FlowMaker extends SingleProcessor {
-	
-	private JFlow oldFlow;
+
+	private JFlowMap flowMap;
+	private JPacket packet;
+	private JFlowKey key;
 
 	public FlowMaker() {
 		super(1, 1);
-		oldFlow = null;
+		flowMap = new JFlowMap();
 	}
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs) {
-		JFlow newFlow = (JFlow) inputs[0];
-		if (oldFlow == null) {
-			// if it is the first flow received, replace the old flow
-			oldFlow = newFlow;
-		}
-		if (oldFlow != newFlow) {
-			// if the two flows are different
-			JFlow flow = oldFlow;
-			oldFlow = newFlow;
-			
-			// return the old flow
-			Object[] out = new Object[1];
-			out[0] = flow;
-			return wrapVector(out);
-		}
-		return null;
+		packet = (JPacket) inputs[0];
+
+		// store packet in flow map
+		flowMap.nextPacket((PcapPacket) packet, null);
+		
+		// output flow
+		key = packet.getState().getFlowKey();
+		Object[] out = new Object[1];
+		out[0] = flowMap.get(key);
+		return wrapVector(out);
+
+		// TODO output flow only after a succession of packets from the same
+		// flow has ended.
 	}
 
 	@Override
