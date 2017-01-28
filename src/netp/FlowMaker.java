@@ -63,8 +63,9 @@ public class FlowMaker extends SingleProcessor {
 
 	@Override
 	public Processor clone() {
-		// TODO Auto-generated method stub
-		return null;
+		FlowMaker clone = new FlowMaker();
+		clone.flowMap = (JFlowMap) flowMap.clone();
+		return clone;
 	}
 
 }
