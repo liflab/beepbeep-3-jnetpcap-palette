@@ -29,11 +29,9 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
- * Places input packets in JFlowMap (packets are thus sorted by flow), then
- * outputs its corresponding flow.
- * 
- * WARNING: THE OUTPUT FLOW CAN (and might) BE INCOMPLETE,
- * 			THE UPDATED FLOW WILL BE OUTPUTED AFTER EACH NEW PACKET ARRIVAL
+ * Places input packets in a JFlowMap (packets are thus sorted by flow), then
+ * outputs its corresponding flow. This flow is temporary, and will be output
+ * again each time a new packet is added to it.
  */
 
 public class FlowMaker extends SingleProcessor {
@@ -53,7 +51,7 @@ public class FlowMaker extends SingleProcessor {
 
 		// store packet in flow map
 		flowMap.nextPacket((PcapPacket) packet, null);
-		
+
 		// output flow
 		key = packet.getState().getFlowKey();
 		Object[] out = new Object[1];
