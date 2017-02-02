@@ -21,11 +21,17 @@ package netp.functions.flow;
 import org.jnetpcap.packet.JFlow;
 import org.jnetpcap.packet.JPacket;
 
+import ca.uqac.lif.cep.functions.BinaryFunction;
+
 /**
  * FlowIntegerFunction to get a network packet from a flow packet and his position
  *
  */
-public class GetPacketFromPosition extends FlowIntegerFunction {
+public class GetPacketFromPosition extends BinaryFunction<JFlow, Integer, Object> {
+
+	public GetPacketFromPosition() {
+		super(JFlow.class, Integer.class, Object.class);
+	}
 
 	/**
 	 * @param flow The flow to extract the packet from

@@ -17,6 +17,7 @@ import ca.uqac.lif.cep.tmf.Source;
  * Outputs packets captured live from a network interface
  *
  */
+
 public class NetworkInterfaceSource extends Source {
 
 	private String interfaceName;

@@ -21,16 +21,17 @@ package netp.functions.flow;
 import org.jnetpcap.packet.JFlow;
 import org.jnetpcap.packet.JPacket;
 
+import ca.uqac.lif.cep.functions.BinaryFunction;
 import netp.functions.packet.GetTimestamp;
 
 /**
  * BinaryFlowFunction to get the time duration between two flows
  *
  */
-public class GetTimeBetweenFlows extends BinaryFlowFunction {
+public class GetTimeBetweenFlows extends BinaryFunction<JFlow, JFlow, Object> {
 
 	public GetTimeBetweenFlows() {
-		super();
+		super(JFlow.class, JFlow.class, Object.class);
 	}
 	
 	
