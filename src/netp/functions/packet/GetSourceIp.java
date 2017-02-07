@@ -28,8 +28,11 @@ import org.jnetpcap.protocol.network.Ip4;
  */
 public class GetSourceIp extends PacketFunction {
 
+	private Ip4 ip4;
+	
 	public GetSourceIp() {
 		super();
+		ip4 = new Ip4();
 	}
 
 	/**
@@ -37,7 +40,7 @@ public class GetSourceIp extends PacketFunction {
 	 */
 	@Override
 	public String getValue(JPacket packet) {
-		Ip4 ip4 = new Ip4();
+		
 		if (packet.hasHeader(ip4)) {
 			return FormatUtils.ip(ip4.source());
 		}

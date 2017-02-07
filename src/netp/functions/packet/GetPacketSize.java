@@ -31,7 +31,8 @@ public class GetPacketSize extends PacketFunction {
 	}
 
 	/**
-	 * @param packet The packet to extract the size length (in bytes) from
+	 * @param packet
+	 *            The packet to extract the size length (in bytes) from
 	 */
 	@Override
 	public Integer getValue(JPacket packet) {

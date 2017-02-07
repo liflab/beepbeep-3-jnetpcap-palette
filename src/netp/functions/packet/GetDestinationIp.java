@@ -28,16 +28,20 @@ import org.jnetpcap.protocol.network.Ip4;
  */
 public class GetDestinationIp extends PacketFunction {
 
+	private Ip4 ip4;
+
 	public GetDestinationIp() {
 		super();
+		ip4 = new Ip4();
 	}
 
 	/**
-	 * @param packet The packet to extract destination IP from
+	 * @param packet
+	 *            The packet to extract destination IP from
 	 */
 	@Override
 	public String getValue(JPacket packet) {
-		Ip4 ip4 = new Ip4();
+
 		if (packet.hasHeader(ip4)) {
 			return FormatUtils.ip(ip4.destination());
 		}

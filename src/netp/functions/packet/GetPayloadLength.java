@@ -27,16 +27,20 @@ import org.jnetpcap.packet.Payload;
  */
 public class GetPayloadLength extends PacketFunction {
 
+	private Payload payload;
+
 	public GetPayloadLength() {
 		super();
+		payload = new Payload();
 	}
 
 	/**
-	 * @param packet The packet to extract payload length (in bytes) from
+	 * @param packet
+	 *            The packet to extract payload length (in bytes) from
 	 */
 	@Override
 	public Integer getValue(JPacket packet) {
-		Payload payload = new Payload();
+
 		if (packet.hasHeader(payload)) {
 			return payload.getLength();
 		}
