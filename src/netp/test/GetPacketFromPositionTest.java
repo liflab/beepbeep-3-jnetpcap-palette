@@ -24,16 +24,19 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.PullConstant;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.FlowReader;
 import netp.FlowTransmitter;
+import netp.PacketReader;
 import netp.PacketSource;
-import netp.functions.flow.GetFlowSize;
+import netp.functions.flow.GetPacketFromPosition;
+import netp.functions.packet.GetSourceIp;
 
-public class GetFlowSizeTest {
+public class GetPacketFromPositionTest {
 
 	@Test
-	public void getFlowSizeTest() {
+	public void getPacketFromPositionTest() {
 		PacketSource source = new PacketSource("test.pcap");
 		
 		FlowTransmitter flow = new FlowTransmitter();
@@ -43,25 +46,34 @@ public class GetFlowSizeTest {
 			e.printStackTrace();
 		}
 
-		FlowReader flowSize = new FlowReader(new GetFlowSize());
+		FlowReader packet = new FlowReader(new GetPacketFromPosition());
+		PullConstant position = new PullConstant((Integer) 0);
 		try {
-			Connector.connect(flow, flowSize, 0, 0);
+			Connector.connect(flow, position, packet);
+		} catch (ConnectorException e) {
+			e.printStackTrace();
+		}
+
+		PacketReader srcIp = new PacketReader(new GetSourceIp());
+		try {
+			Connector.connect(packet, srcIp, 0, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(flowSize, sink, 0, 0);
+			Connector.connect(srcIp, sink, 0, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
-		source.push();
-		Integer output = (Integer) sink.remove()[0];
+		sink.pull();
+		//source.push();
+		String output = (String) sink.remove()[0];
 		System.out.println(output);
 		
-		Integer expected = 1;
+		String expected = "172.16.24.194";
 		assertEquals(expected, output);
 	}
 

@@ -26,6 +26,10 @@ import org.jnetpcap.packet.JPacket;
  *
  */
 public class GetPacketFromPosition extends FlowIntegerFunction {
+	
+	public GetPacketFromPosition() {
+		super();
+	}
 
 	/**
 	 * @param flow The flow to extract the packet from

@@ -19,7 +19,9 @@
 package netp;
 
 import ca.uqac.lif.cep.functions.FunctionProcessor;
+import netp.functions.flow.BinaryFlowFunction;
 import netp.functions.flow.FlowFunction;
+import netp.functions.flow.FlowIntegerFunction;
 
 /**
  * FunctionProcessor used to extract information from a network flow
@@ -30,6 +32,20 @@ public class FlowReader extends FunctionProcessor {
 	 * @param function The computable FlowFunction responsible for the computation
 	 */
 	public FlowReader(FlowFunction function) {
+		super(function);
+	}
+	
+	/**
+	 * @param function The computable BinaryFlowFunction responsible for the computation
+	 */
+	public FlowReader(BinaryFlowFunction function) {
+		super(function);
+	}
+	
+	/**
+	 * @param function The computable FlowIntegerFunction responsible for the computation
+	 */
+	public FlowReader(FlowIntegerFunction function) {
 		super(function);
 	}
 
