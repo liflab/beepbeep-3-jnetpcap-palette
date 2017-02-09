@@ -14,6 +14,7 @@ public class LiveCapture {
 
 	public static void main(String[] args) throws Exception {
 		// outputs packets from a network interface
+		// "any" takes packets from all devices
 		NetworkInterfaceSource source = new NetworkInterfaceSource("any");
 
 		// extract source IP address of packet

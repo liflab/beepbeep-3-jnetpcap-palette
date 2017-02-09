@@ -28,17 +28,22 @@ import org.jnetpcap.protocol.tcpip.Udp;
  */
 public class GetDestinationPort extends PacketFunction {
 
+	private Tcp tcp;
+	private Udp udp;
+
 	public GetDestinationPort() {
 		super();
+		tcp = new Tcp();
+		udp = new Udp();
 	}
 
 	/**
-	 * @param packet The packet to extract destination port from
+	 * @param packet
+	 *            The packet to extract destination port from
 	 */
 	@Override
 	public Integer getValue(JPacket packet) {
-		Tcp tcp = new Tcp();
-		Udp udp = new Udp();
+
 		if (packet.hasHeader(tcp)) {
 			return tcp.destination();
 		}

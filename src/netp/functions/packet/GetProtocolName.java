@@ -26,29 +26,38 @@ import org.jnetpcap.packet.JPacket;
  */
 public class GetProtocolName extends PacketFunction {
 
+	private GetProtocolId protocolId;
+	private int id;
+	private String result;
+
 	public GetProtocolName() {
 		super();
+		protocolId = new GetProtocolId();
 	}
-	
+
 	/**
-	 * @param packet The packet to extract protocol name from
+	 * @param packet
+	 *            The packet to extract protocol name from
 	 */
 	@Override
 	public String getValue(JPacket packet) {
-		GetProtocolId protocolId = new GetProtocolId();
-		Integer id = protocolId.getValue(packet);
-		String result;
-		
+
+		id = protocolId.getValue(packet);
+
 		// TODO add cases if necessary
 		switch (id) {
-	    	case 4:	 result = "IPv4";
-	        		 break;
-	        case 6:	 result = "TCP";
-	        		 break;
-	        case 17: result = "UDP";
-	        		 break;
-	        default: result = "";
-	        		 break;
+		case 4:
+			result = "IPv4";
+			break;
+		case 6:
+			result = "TCP";
+			break;
+		case 17:
+			result = "UDP";
+			break;
+		default:
+			result = "undefined";
+			break;
 		}
 		return result;
 	}

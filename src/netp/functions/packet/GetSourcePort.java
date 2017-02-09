@@ -28,17 +28,21 @@ import org.jnetpcap.protocol.tcpip.Udp;
  */
 public class GetSourcePort extends PacketFunction {
 
+	private Tcp tcp;
+	private Udp udp;
+
 	public GetSourcePort() {
 		super();
+		tcp = new Tcp();
+		udp = new Udp();
 	}
 
 	/**
-	 * @param packet The packet to extract source port from
+	 * @param packet
+	 *            The packet to extract source port from
 	 */
 	@Override
 	public Integer getValue(JPacket packet) {
-		Tcp tcp = new Tcp();
-		Udp udp = new Udp();
 		if (packet.hasHeader(tcp)) {
 			return tcp.source();
 		}

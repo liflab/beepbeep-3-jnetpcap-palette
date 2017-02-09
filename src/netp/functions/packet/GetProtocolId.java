@@ -27,8 +27,11 @@ import org.jnetpcap.protocol.network.Ip4;
  */
 public class GetProtocolId extends PacketFunction {
 
+	private Ip4 ip4;
+	
 	public GetProtocolId() {
 		super();
+		ip4 = new Ip4();
 	}
 
 	/**
@@ -36,7 +39,6 @@ public class GetProtocolId extends PacketFunction {
 	 */
 	@Override
 	public Integer getValue(JPacket packet) {
-		Ip4 ip4 = new Ip4();
 		// TODO what if it isn't IPv4?
 		if (packet.hasHeader(ip4)) {
 			return ip4.type();
