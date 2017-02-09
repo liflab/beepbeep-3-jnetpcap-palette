@@ -25,9 +25,8 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.PullConstant;
-import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tmf.Source;
 import netp.FlowReader;
 import netp.FlowTransmitter;
 import netp.PacketReader;
@@ -42,33 +41,43 @@ public class GetPacketFromPositionTest {
 	public void getPacketFromPositionTest() {
 		PacketSource source = new PacketSource("test.pcap");
 		
-		FlowTransmitter flow = new FlowTransmitter();
+		Fork fork = new Fork(2);
 		try {
-			Connector.connect(source, flow, 0, 0);
+			Connector.connect(source, fork, 0, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
-
+		
+		FlowTransmitter flow = new FlowTransmitter();
+		PullConstant position = new PullConstant((Integer) 0);
+		try {
+			Connector.connect(fork, flow, 0, 0);
+			Connector.connect(fork, position, 1, 0);
+		} catch (ConnectorException e) {
+			e.printStackTrace();
+		}
+		
 		FlowReader packet = new FlowReader(new GetPacketFromPosition());
-		PullConstant position = new PullConstant((Integer) 4);
+
 		try {
 			Connector.connect(flow, position, packet);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
-
+		
 		PacketReader srcIp = new PacketReader(new GetSourceIp());
 		try {
 			Connector.connect(packet, srcIp, 0, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
-
+		
+		/*
 		Pullable p = srcIp.getPullableOutput();
 		String output = (String) p.pull();
 		System.out.println(output);
+		*/
 		
-		/*
 		QueueSink sink = new QueueSink(1);
 		try {
 			Connector.connect(srcIp, sink, 0, 0);
@@ -79,7 +88,7 @@ public class GetPacketFromPositionTest {
 		source.push();
 		String output = (String) sink.remove()[0];
 		System.out.println(output);
-		*/
+		
 		String expected = "172.16.24.194";
 		assertEquals(expected, output);
 		
