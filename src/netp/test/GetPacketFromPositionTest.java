@@ -58,7 +58,6 @@ public class GetPacketFromPositionTest {
 		}
 		
 		FlowReader packet = new FlowReader(new GetPacketFromPosition());
-
 		try {
 			Connector.connect(flow, position, packet);
 		} catch (ConnectorException e) {
