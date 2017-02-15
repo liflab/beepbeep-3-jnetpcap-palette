@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.FlowTransmitter;
 import netp.FlowReader;
 import netp.PacketSource;
-import netp.functions.flow.GetFlowSize;
+import netp.functions.GetFlowSize;
 
 /**
  * Displays the size of each arriving flow

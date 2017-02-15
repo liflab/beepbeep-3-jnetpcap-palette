@@ -23,7 +23,7 @@ import org.jnetpcap.packet.JPacket;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
-import netp.functions.flow.FlowFunction;
+import netp.functions.FlowFunction;
 
 /**
  * FunctionProcessor used to extract information from a network flow

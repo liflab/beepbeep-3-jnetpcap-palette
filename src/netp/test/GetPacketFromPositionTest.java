@@ -31,8 +31,8 @@ import netp.FlowReader;
 import netp.FlowTransmitter;
 import netp.PacketReader;
 import netp.PacketSource;
-import netp.functions.flow.GetPacketFromPosition;
-import netp.functions.packet.GetSourceIp;
+import netp.functions.GetPacketFromPosition;
+import netp.functions.GetSourceIp;
 
 public class GetPacketFromPositionTest {
 

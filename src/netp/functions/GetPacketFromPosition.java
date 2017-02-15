@@ -16,40 +16,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.packet;
+package netp.functions;
 
+import org.jnetpcap.packet.JFlow;
 import org.jnetpcap.packet.JPacket;
-import org.jnetpcap.protocol.tcpip.Tcp;
-import org.jnetpcap.protocol.tcpip.Udp;
+
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
- * PacketFunction to get source port from a network packet
+ * FlowIntegerFunction to get a network packet from a flow packet and his position
  *
  */
-public class GetSourcePort extends PacketFunction {
+public class GetPacketFromPosition extends BinaryFunction<JFlow, Integer, JPacket> {
 
-	private Tcp tcp;
-	private Udp udp;
-
-	public GetSourcePort() {
-		super();
-		tcp = new Tcp();
-		udp = new Udp();
+	public GetPacketFromPosition() {
+		super(JFlow.class, Integer.class, JPacket.class);
 	}
 
 	/**
-	 * @param packet
-	 *            The packet to extract source port from
+	 * @param flow The flow to extract the packet from
+	 * @param i The position of the packet to extract
 	 */
 	@Override
-	public Integer getValue(JPacket packet) {
-		if (packet.hasHeader(tcp)) {
-			return tcp.source();
+	public JPacket getValue(JFlow flow, Integer i) throws IndexOutOfBoundsException {
+		if(flow.size() > i) {
+			return flow.getAll().get(i);
 		}
-		if (packet.hasHeader(udp)) {
-			return udp.source();
-		}
-		return null;
+		//TODO is it ok to throw an exception?
+		throw new IndexOutOfBoundsException();
 	}
 
 }

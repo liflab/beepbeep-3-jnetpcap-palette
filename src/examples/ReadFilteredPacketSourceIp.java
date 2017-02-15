@@ -21,11 +21,11 @@ package examples;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.QueueSink;
+import netp.PacketFilter;
 import netp.PacketReader;
 import netp.PacketSource;
-import netp.filters.PacketFilter;
-import netp.filters.PayloadFilter;
-import netp.functions.packet.GetSourceIp;
+import netp.PayloadFilter;
+import netp.functions.GetSourceIp;
 
 /**
  * Displays the source IP only from UDP packets containing byte 24 and 99

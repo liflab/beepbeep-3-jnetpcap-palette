@@ -16,34 +16,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.flow;
+package netp.functions;
 
-import org.jnetpcap.packet.JFlow;
 import org.jnetpcap.packet.JPacket;
 
-import ca.uqac.lif.cep.functions.BinaryFunction;
-
 /**
- * FlowIntegerFunction to get a network packet from a flow packet and his position
- *
+ * PacketFunction to get the timestamp of a network packet
+ * 
  */
-public class GetPacketFromPosition extends BinaryFunction<JFlow, Integer, JPacket> {
+public class GetTimestamp extends PacketFunction {
 
-	public GetPacketFromPosition() {
-		super(JFlow.class, Integer.class, JPacket.class);
+	public GetTimestamp() {
+		super();
 	}
-
+	
 	/**
-	 * @param flow The flow to extract the packet from
-	 * @param i The position of the packet to extract
+	 * @param packet The packet to timestamp from
 	 */
 	@Override
-	public JPacket getValue(JFlow flow, Integer i) throws IndexOutOfBoundsException {
-		if(flow.size() > i) {
-			return flow.getAll().get(i);
-		}
-		//TODO is it ok to throw an exception?
-		throw new IndexOutOfBoundsException();
+	public Long getValue(JPacket packet) {
+		return packet.getCaptureHeader().timestampInMillis();
 	}
 
 }

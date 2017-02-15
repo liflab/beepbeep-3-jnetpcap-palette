@@ -16,35 +16,50 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.packet;
+package netp.functions;
 
 import org.jnetpcap.packet.JPacket;
-import org.jnetpcap.packet.format.FormatUtils;
-import org.jnetpcap.protocol.network.Ip4;
 
 /**
- * PacketFunction to get source IP from a network packet
+ * PacketFunction to get the protocol name of a network packet
  *
  */
-public class GetSourceIp extends PacketFunction {
+public class GetProtocolName extends PacketFunction {
 
-	private Ip4 ip4;
-	
-	public GetSourceIp() {
+	private GetProtocolId protocolId;
+	private int id;
+	private String result;
+
+	public GetProtocolName() {
 		super();
-		ip4 = new Ip4();
+		protocolId = new GetProtocolId();
 	}
 
 	/**
-	 * @param packet The packet to extract source IP from
+	 * @param packet
+	 *            The packet to extract protocol name from
 	 */
 	@Override
 	public String getValue(JPacket packet) {
-		
-		if (packet.hasHeader(ip4)) {
-			return FormatUtils.ip(ip4.source());
+
+		id = protocolId.getValue(packet);
+
+		// TODO add cases if necessary
+		switch (id) {
+		case 4:
+			result = "IPv4";
+			break;
+		case 6:
+			result = "TCP";
+			break;
+		case 17:
+			result = "UDP";
+			break;
+		default:
+			result = "undefined";
+			break;
 		}
-		return null;
+		return result;
 	}
 
 }

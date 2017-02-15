@@ -16,25 +16,27 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.packet;
+package netp.functions;
 
 import org.jnetpcap.packet.JPacket;
 
-import ca.uqac.lif.cep.functions.UnaryFunction;
-
 /**
- * Abstact function used to extract information from a network packet
+ * PacketFunction to get a network packet size (in bytes)
  *
  */
-public abstract class PacketFunction extends UnaryFunction<JPacket, Object> {
+public class GetPacketSize extends PacketFunction {
+
+	public GetPacketSize() {
+		super();
+	}
 
 	/**
-	 * 
-	 * @param input The input JPacket element of the function
-	 * @param output The output of the function
+	 * @param packet
+	 *            The packet to extract the size length (in bytes) from
 	 */
-	public PacketFunction() {
-		super(JPacket.class,  Object.class);
+	@Override
+	public Integer getValue(JPacket packet) {
+		return packet.size();
 	}
-	
+
 }
