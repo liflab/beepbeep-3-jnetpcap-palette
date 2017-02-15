@@ -26,8 +26,8 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.FlowReader;
 import netp.FlowTransmitter;
 import netp.PacketSource;
-import netp.functions.flow.FlowFunction;
-import netp.functions.flow.GetFlowSize;
+import netp.functions.FlowFunction;
+import netp.functions.GetFlowSize;
 
 /**
  * Return true if a flow has two packets or more
