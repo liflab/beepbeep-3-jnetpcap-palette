@@ -18,6 +18,10 @@
 
 package netp;
 
+import org.jnetpcap.packet.JFlow;
+import org.jnetpcap.packet.JPacket;
+
+import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import netp.functions.flow.FlowFunction;
 
@@ -32,5 +36,12 @@ public class FlowReader extends FunctionProcessor {
 	public FlowReader(FlowFunction function) {
 		super(function);
 	}
-
+	
+	/**
+	 * @param function The computable BinaryFlowFunction responsible for the computation
+	 */
+	public FlowReader(BinaryFunction<JFlow, Integer, JPacket> function) {
+		super(function);
+	}
+	
 }

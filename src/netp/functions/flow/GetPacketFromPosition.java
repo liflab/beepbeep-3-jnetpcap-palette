@@ -27,10 +27,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  * FlowIntegerFunction to get a network packet from a flow packet and his position
  *
  */
-public class GetPacketFromPosition extends BinaryFunction<JFlow, Integer, Object> {
+public class GetPacketFromPosition extends BinaryFunction<JFlow, Integer, JPacket> {
 
 	public GetPacketFromPosition() {
-		super(JFlow.class, Integer.class, Object.class);
+		super(JFlow.class, Integer.class, JPacket.class);
 	}
 
 	/**
@@ -38,12 +38,12 @@ public class GetPacketFromPosition extends BinaryFunction<JFlow, Integer, Object
 	 * @param i The position of the packet to extract
 	 */
 	@Override
-	public JPacket getValue(JFlow flow, Integer i) {
+	public JPacket getValue(JFlow flow, Integer i) throws IndexOutOfBoundsException {
 		if(flow.size() > i) {
 			return flow.getAll().get(i);
 		}
-		//TODO what to return?
-		return null;
+		//TODO is it ok to throw an exception?
+		throw new IndexOutOfBoundsException();
 	}
 
 }

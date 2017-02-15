@@ -24,45 +24,74 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.PullConstant;
+import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.FlowReader;
 import netp.FlowTransmitter;
+import netp.PacketReader;
 import netp.PacketSource;
-import netp.functions.flow.GetFlowSize;
+import netp.functions.flow.GetPacketFromPosition;
+import netp.functions.packet.GetSourceIp;
 
-public class GetFlowSizeTest {
+public class GetPacketFromPositionTest {
 
+	//TODO complete this test !!!!!!
 	@Test
-	public void getFlowSizeTest() {
+	public void getPacketFromPositionTest() {
 		PacketSource source = new PacketSource("test.pcap");
 		
+		Fork fork = new Fork(2);
+		try {
+			Connector.connect(source, fork, 0, 0);
+		} catch (ConnectorException e) {
+			e.printStackTrace();
+		}
+		
 		FlowTransmitter flow = new FlowTransmitter();
+		PullConstant position = new PullConstant((Integer) 0);
 		try {
-			Connector.connect(source, flow, 0, 0);
+			Connector.connect(fork, flow, 0, 0);
+			Connector.connect(fork, position, 1, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
+		
+		FlowReader packet = new FlowReader(new GetPacketFromPosition());
 
-		FlowReader flowSize = new FlowReader(new GetFlowSize());
 		try {
-			Connector.connect(flow, flowSize, 0, 0);
+			Connector.connect(flow, position, packet);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
-
+		
+		PacketReader srcIp = new PacketReader(new GetSourceIp());
+		try {
+			Connector.connect(packet, srcIp, 0, 0);
+		} catch (ConnectorException e) {
+			e.printStackTrace();
+		}
+		
+		/*
+		Pullable p = srcIp.getPullableOutput();
+		String output = (String) p.pull();
+		System.out.println(output);
+		*/
+		
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(flowSize, sink, 0, 0);
+			Connector.connect(srcIp, sink, 0, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
-
+		
 		source.push();
-		Integer output = (Integer) sink.remove()[0];
+		String output = (String) sink.remove()[0];
 		System.out.println(output);
 		
-		Integer expected = 1;
+		String expected = "172.16.24.194";
 		assertEquals(expected, output);
+		
 	}
 
 }
