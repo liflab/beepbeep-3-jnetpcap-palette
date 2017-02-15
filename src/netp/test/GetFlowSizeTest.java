@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.FlowReader;
 import netp.FlowTransmitter;
 import netp.PacketSource;
-import netp.functions.flow.GetFlowSize;
+import netp.functions.GetFlowSize;
 
 public class GetFlowSizeTest {
 

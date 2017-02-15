@@ -16,26 +16,25 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.packet;
+package netp.functions;
 
 import org.jnetpcap.packet.JPacket;
 
-/**
- * PacketFunction to get the timestamp of a network packet
- * 
- */
-public class GetTimestamp extends PacketFunction {
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
-	public GetTimestamp() {
-		super();
+/**
+ * Abstact function used to extract information from a network packet
+ *
+ */
+public abstract class PacketFunction extends UnaryFunction<JPacket, Object> {
+
+	/**
+	 * 
+	 * @param input The input JPacket element of the function
+	 * @param output The output of the function
+	 */
+	public PacketFunction() {
+		super(JPacket.class,  Object.class);
 	}
 	
-	/**
-	 * @param packet The packet to timestamp from
-	 */
-	@Override
-	public Long getValue(JPacket packet) {
-		return packet.getCaptureHeader().timestampInMillis();
-	}
-
 }

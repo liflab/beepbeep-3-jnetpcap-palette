@@ -16,34 +16,38 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.packet;
+package netp.functions;
 
 import org.jnetpcap.packet.JPacket;
-import org.jnetpcap.packet.format.FormatUtils;
-import org.jnetpcap.protocol.network.Ip4;
+import org.jnetpcap.protocol.tcpip.Tcp;
+import org.jnetpcap.protocol.tcpip.Udp;
 
 /**
- * PacketFunction to get destination IP from a network packet
+ * PacketFunction to get source port from a network packet
  *
  */
-public class GetDestinationIp extends PacketFunction {
+public class GetSourcePort extends PacketFunction {
 
-	private Ip4 ip4;
+	private Tcp tcp;
+	private Udp udp;
 
-	public GetDestinationIp() {
+	public GetSourcePort() {
 		super();
-		ip4 = new Ip4();
+		tcp = new Tcp();
+		udp = new Udp();
 	}
 
 	/**
 	 * @param packet
-	 *            The packet to extract destination IP from
+	 *            The packet to extract source port from
 	 */
 	@Override
-	public String getValue(JPacket packet) {
-
-		if (packet.hasHeader(ip4)) {
-			return FormatUtils.ip(ip4.destination());
+	public Integer getValue(JPacket packet) {
+		if (packet.hasHeader(tcp)) {
+			return tcp.source();
+		}
+		if (packet.hasHeader(udp)) {
+			return udp.source();
 		}
 		return null;
 	}

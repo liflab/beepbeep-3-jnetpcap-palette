@@ -16,28 +16,36 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.flow;
+package netp.functions;
 
-import org.jnetpcap.packet.JFlow;
-
-import netp.functions.flow.FlowFunction;
+import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.format.FormatUtils;
+import org.jnetpcap.protocol.network.Ip4;
 
 /**
- * FlowFunction to get a network flow size (number of packets in the flow)
+ * PacketFunction to get destination IP from a network packet
  *
  */
-public class GetFlowSize extends FlowFunction {
+public class GetDestinationIp extends PacketFunction {
 
-	public GetFlowSize() {
+	private Ip4 ip4;
+
+	public GetDestinationIp() {
 		super();
+		ip4 = new Ip4();
 	}
-	
+
 	/**
-	 * @param flow The flow to extract the number of packets from
+	 * @param packet
+	 *            The packet to extract destination IP from
 	 */
 	@Override
-	public Integer getValue(JFlow flow) {
-		return flow.size();
+	public String getValue(JPacket packet) {
+
+		if (packet.hasHeader(ip4)) {
+			return FormatUtils.ip(ip4.destination());
+		}
+		return null;
 	}
 
 }

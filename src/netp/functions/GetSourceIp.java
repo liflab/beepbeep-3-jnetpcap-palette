@@ -16,32 +16,33 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.packet;
+package netp.functions;
 
 import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.network.Ip4;
 
 /**
- * PacketFunction to get the protocol id of a network packet
+ * PacketFunction to get source IP from a network packet
  *
  */
-public class GetProtocolId extends PacketFunction {
+public class GetSourceIp extends PacketFunction {
 
 	private Ip4 ip4;
 	
-	public GetProtocolId() {
+	public GetSourceIp() {
 		super();
 		ip4 = new Ip4();
 	}
 
 	/**
-	 * @param packet The packet to extract protocol id from
+	 * @param packet The packet to extract source IP from
 	 */
 	@Override
-	public Integer getValue(JPacket packet) {
-		// TODO what if it isn't IPv4?
+	public String getValue(JPacket packet) {
+		
 		if (packet.hasHeader(ip4)) {
-			return ip4.type();
+			return FormatUtils.ip(ip4.source());
 		}
 		return null;
 	}

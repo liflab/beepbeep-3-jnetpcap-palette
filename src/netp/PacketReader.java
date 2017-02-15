@@ -19,7 +19,7 @@
 package netp;
 
 import ca.uqac.lif.cep.functions.*;
-import netp.functions.packet.PacketFunction;
+import netp.functions.PacketFunction;
 
 /**
  * FunctionProcessor used to extract information from a network packet

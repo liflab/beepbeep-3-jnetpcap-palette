@@ -4,7 +4,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.NetworkInterfaceSource;
 import netp.PacketReader;
-import netp.functions.packet.GetSourceIp;
+import netp.functions.GetSourceIp;
 
 /**
  * Shows how to capture packets live from a network interface, and displays their source ip.

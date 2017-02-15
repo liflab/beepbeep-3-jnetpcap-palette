@@ -16,27 +16,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.functions.packet;
+package netp.functions;
 
-import org.jnetpcap.packet.JPacket;
+
+import org.jnetpcap.packet.JFlow;
+
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * PacketFunction to get a network packet size (in bytes)
+ * Abstact function used to extract information from a network flow
  *
  */
-public class GetPacketSize extends PacketFunction {
-
-	public GetPacketSize() {
-		super();
-	}
+public abstract class FlowFunction extends UnaryFunction<JFlow, Object> {
 
 	/**
-	 * @param packet
-	 *            The packet to extract the size length (in bytes) from
+	 * 
+	 * @param input The input JFlow element of the function
+	 * @param output The output of the function
 	 */
-	@Override
-	public Integer getValue(JPacket packet) {
-		return packet.size();
+	public FlowFunction() {
+		super(JFlow.class,  Object.class);
 	}
-
+	
 }

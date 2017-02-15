@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package netp.filters;
+package netp;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

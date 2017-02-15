@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketReader;
 import netp.PacketSource;
-import netp.functions.packet.*;
+import netp.functions.*;
 
 public class GetDestinationIpTest {
 

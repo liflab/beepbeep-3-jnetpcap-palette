@@ -23,7 +23,7 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketReader;
 import netp.PacketSource;
-import netp.functions.packet.GetSourceIp;
+import netp.functions.GetSourceIp;
 
 /**
  * Displays the destination IP for each packet
