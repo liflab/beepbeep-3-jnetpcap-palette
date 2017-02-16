@@ -28,14 +28,15 @@ import org.jnetpcap.protocol.network.Ip4;
 public class GetProtocolId extends PacketFunction {
 
 	private Ip4 ip4;
-	
+
 	public GetProtocolId() {
 		super();
 		ip4 = new Ip4();
 	}
 
 	/**
-	 * @param packet The packet to extract protocol id from
+	 * @param packet
+	 *            The packet to extract protocol id from
 	 */
 	@Override
 	public Integer getValue(JPacket packet) {
@@ -44,6 +45,11 @@ public class GetProtocolId extends PacketFunction {
 			return ip4.type();
 		}
 		return null;
+	}
+
+	@Override
+	public Class<?> getOutputTypeFor(int index) {
+		return Integer.class;
 	}
 
 }

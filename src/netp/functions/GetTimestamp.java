@@ -29,13 +29,19 @@ public class GetTimestamp extends PacketFunction {
 	public GetTimestamp() {
 		super();
 	}
-	
+
 	/**
-	 * @param packet The packet to timestamp from
+	 * @param packet
+	 *            The packet to timestamp from
 	 */
 	@Override
 	public Long getValue(JPacket packet) {
 		return packet.getCaptureHeader().timestampInMillis();
+	}
+
+	@Override
+	public Class<?> getOutputTypeFor(int index) {
+		return Long.class;
 	}
 
 }

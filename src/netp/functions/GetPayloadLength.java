@@ -47,4 +47,9 @@ public class GetPayloadLength extends PacketFunction {
 		return null;
 	}
 
+	@Override
+	public Class<?> getOutputTypeFor(int index) {
+		return Integer.class;
+	}
+
 }

@@ -31,13 +31,19 @@ public class GetFlowSize extends FlowFunction {
 	public GetFlowSize() {
 		super();
 	}
-	
+
 	/**
-	 * @param flow The flow to extract the number of packets from
+	 * @param flow
+	 *            The flow to extract the number of packets from
 	 */
 	@Override
 	public Integer getValue(JFlow flow) {
 		return flow.size();
+	}
+
+	@Override
+	public Class<?> getOutputTypeFor(int index) {
+		return Integer.class;
 	}
 
 }

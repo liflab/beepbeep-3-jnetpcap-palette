@@ -39,4 +39,9 @@ public class GetPacketSize extends PacketFunction {
 		return packet.size();
 	}
 
+	@Override
+	public Class<?> getOutputTypeFor(int index) {
+		return Integer.class;
+	}
+
 }
