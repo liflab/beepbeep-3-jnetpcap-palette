@@ -41,6 +41,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  */
 public class PacketFilter extends SingleProcessor {
 
+	public static final int ICMP = 1;
 	public static final int TCP = 6;
 	public static final int UDP = 17;
 	public static final int ANY_PROTOCOL = 0;
