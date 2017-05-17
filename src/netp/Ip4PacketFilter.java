@@ -36,9 +36,9 @@ import ca.uqac.lif.cep.SingleProcessor;
  * criterion are net protocol, source and destination IP, and source and
  * destination port. A packet must satisfy ALL criterion to pass through the
  * filter.
- *
+ * At least, it lets only IPv4 packets through, and discards the rest.
  */
-public class PacketFilter extends SingleProcessor {
+public class Ip4PacketFilter extends SingleProcessor {
 
 	public static final int ICMP = 1;
 	public static final int TCP = 6;
@@ -64,7 +64,7 @@ public class PacketFilter extends SingleProcessor {
 	/**
 	 * Instantiates a default filter that allows all packets through
 	 */
-	public PacketFilter() {
+	public Ip4PacketFilter() {
 		super(1, 1);
 		protocol = ANY_PROTOCOL;
 		sourcePortLow = 0;
@@ -144,8 +144,8 @@ public class PacketFilter extends SingleProcessor {
 	}
 
 	/**
-	 * Set the protocol to allow through the filter. At the moment, only TCP and
-	 * UDP are supported.
+	 * Set the protocol to allow through the filter.
+	 * The filtered protocol is the one within the IPv4 header.
 	 * 
 	 * @param protocol
 	 *            the protocol ID, or <code>PacketFilter.ANY_PROTOCOL</code> to
@@ -278,8 +278,8 @@ public class PacketFilter extends SingleProcessor {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public PacketFilter clone() {
-		PacketFilter clone = new PacketFilter();
+	public Ip4PacketFilter clone() {
+		Ip4PacketFilter clone = new Ip4PacketFilter();
 		clone.protocol = protocol;
 		clone.sourceIp = (ArrayList<byte[]>) sourceIp.clone();
 		clone.sourcePortLow = sourcePortLow;
