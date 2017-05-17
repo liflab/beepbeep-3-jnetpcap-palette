@@ -43,9 +43,9 @@ public class FlowTransmitter extends SingleProcessor {
 		super(1, 1);
 		flowMap = new JFlowMap();
 	}
-
+	
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) {
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) {
 		packet = (JPacket) inputs[0];
 
 		// store packet in flow map
@@ -55,7 +55,8 @@ public class FlowTransmitter extends SingleProcessor {
 		key = packet.getState().getFlowKey();
 		Object[] out = new Object[1];
 		out[0] = flowMap.get(key);
-		return wrapVector(out);
+		outputs.add(out);
+		return true;
 
 		// TODO output flow only after a succession of packets from the same
 		// flow has ended.
