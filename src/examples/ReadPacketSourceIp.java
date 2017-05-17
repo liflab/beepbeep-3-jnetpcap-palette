@@ -20,8 +20,8 @@ package examples;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import netp.PacketReader;
 import netp.PacketSource;
 import netp.functions.GetSourceIp;
 
@@ -33,7 +33,7 @@ public class ReadPacketSourceIp {
 	public static void main(String[] args) throws ConnectorException {
 		PacketSource source = new PacketSource("test.pcap");
 
-		PacketReader srcIp = new PacketReader(new GetSourceIp());
+		FunctionProcessor srcIp = new FunctionProcessor(new GetSourceIp());
 		try {
 			Connector.connect(source, srcIp, 0, 0);
 		} catch (ConnectorException e) {

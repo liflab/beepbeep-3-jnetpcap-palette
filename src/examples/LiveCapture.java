@@ -1,9 +1,9 @@
 package examples;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.NetworkInterfaceSource;
-import netp.PacketReader;
 import netp.functions.GetSourceIp;
 
 /**
@@ -18,7 +18,7 @@ public class LiveCapture {
 		NetworkInterfaceSource source = new NetworkInterfaceSource("any");
 
 		// extract source IP address of packet
-		PacketReader sourceIp = new PacketReader(new GetSourceIp());
+		FunctionProcessor sourceIp = new FunctionProcessor(new GetSourceIp());
 		Connector.connect(source, sourceIp, 0, 0);
 
 		// retrieve results

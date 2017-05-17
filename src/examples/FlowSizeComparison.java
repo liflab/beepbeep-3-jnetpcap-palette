@@ -22,12 +22,11 @@ import org.jnetpcap.packet.JFlow;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import netp.FlowReader;
 import netp.FlowTransmitter;
 import netp.PacketSource;
-import netp.functions.FlowFunction;
-import netp.functions.GetFlowSize;
 
 /**
  * Return true if a flow has two packets or more
@@ -40,10 +39,10 @@ public class FlowSizeComparison {
 		/**
 		 * FlowFunction to know if a packet has two (or more) packets, or not
 		 */
-		class HasTwoPacketsOrMore extends FlowFunction {
+		class HasTwoPacketsOrMore extends UnaryFunction<JFlow, Boolean> {
 			
 			public HasTwoPacketsOrMore() {
-				super();
+				super(JFlow.class, Boolean.class);
 			}
 
 			/**
@@ -51,8 +50,7 @@ public class FlowSizeComparison {
 			 */
 			@Override
 			public Boolean getValue(JFlow flow) {
-				GetFlowSize flowSize = new GetFlowSize();
-				Integer size = flowSize.getValue(flow);
+				Integer size = flow.size();
 				if (size >= 2) {
 					return true;
 				}
@@ -69,7 +67,7 @@ public class FlowSizeComparison {
 			e.printStackTrace();
 		}
 		
-		FlowReader hasFiveOrMore = new FlowReader(new HasTwoPacketsOrMore());
+		FunctionProcessor hasFiveOrMore = new FunctionProcessor(new HasTwoPacketsOrMore());
 		try {
 			Connector.connect(flow, hasFiveOrMore, 0, 0);
 		} catch (ConnectorException e) {

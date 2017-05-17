@@ -20,9 +20,9 @@ package examples;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.FlowTransmitter;
-import netp.FlowReader;
 import netp.PacketSource;
 import netp.functions.GetFlowSize;
 
@@ -41,7 +41,7 @@ public class ReadFlowSize {
 			e.printStackTrace();
 		}
 		
-		FlowReader flowSize = new FlowReader(new GetFlowSize());
+		FunctionProcessor flowSize = new FunctionProcessor(new GetFlowSize());
 		try {
 			Connector.connect(flow, flowSize, 0, 0);
 		} catch (ConnectorException e) {

@@ -20,9 +20,9 @@ package examples;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import netp.PacketFilter;
-import netp.PacketReader;
+import netp.Ip4PacketFilter;
 import netp.PacketSource;
 import netp.PayloadFilter;
 import netp.functions.GetSourceIp;
@@ -39,8 +39,8 @@ public class ReadFilteredPacketSourceIp {
 		PacketSource source = new PacketSource("test.pcap");
 
 		// only keep UDP packets
-		PacketFilter packetFilter = new PacketFilter();
-		packetFilter.setProtocol(PacketFilter.UDP);
+		Ip4PacketFilter packetFilter = new Ip4PacketFilter();
+		packetFilter.setProtocol(Ip4PacketFilter.UDP);
 		Connector.connect(source, packetFilter, 0, 0);
 
 		// only keep packets containing bytes 24 99 in payload
@@ -49,7 +49,7 @@ public class ReadFilteredPacketSourceIp {
 		Connector.connect(packetFilter, payloadFilter, 0, 0);
 
 		// extract source IP address of packet
-		PacketReader sourceIp = new PacketReader(new GetSourceIp());
+		FunctionProcessor sourceIp = new FunctionProcessor(new GetSourceIp());
 		Connector.connect(payloadFilter, sourceIp, 0, 0);
 
 		// retrieve results
