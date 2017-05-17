@@ -72,12 +72,15 @@ public class NetworkInterfaceSource extends Source {
 		
 		System.out.println("Live capture ready");
 	}
-
+	
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) {
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) {
 		PcapPacketArrayList packets = new PcapPacketArrayList();
 		pcap.loop(1, jpacketHandler, packets);
-		return wrapObject(packets.get(0));
+		Object[] out = new Object[1];
+		out[0] = packets.get(0);
+		outputs.add(out);
+		return true;
 	}
 
 	@Override
@@ -89,5 +92,4 @@ public class NetworkInterfaceSource extends Source {
 	public String getInterfaceName(){
 		return interfaceName;
 	}
-
 }

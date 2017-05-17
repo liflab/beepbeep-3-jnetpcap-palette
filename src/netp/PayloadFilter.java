@@ -18,7 +18,6 @@
 
 package netp;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
 import javax.xml.bind.DatatypeConverter;
@@ -85,9 +84,9 @@ public class PayloadFilter extends SingleProcessor {
 		this.filter = filter;
 		return true;
 	}
-
+	
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) {
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) {
 		ip4 = new Ip4();
 		packet = (JPacket) inputs[0];
 		protocol = packet.getHeader(ip4).type();
@@ -106,10 +105,11 @@ public class PayloadFilter extends SingleProcessor {
 		if (contains(payload, filter)) {
 			Object[] out = new Object[1];
 			out[0] = packet;
-			return wrapVector(out);
+			outputs.add(out);
+			return true;
 		}
 
-		return new ArrayDeque<Object[]>();
+		return true;
 	}
 
 	@Override
