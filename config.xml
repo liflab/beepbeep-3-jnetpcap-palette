@@ -23,17 +23,17 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>JNetPcap extension for BeepBeep 3</name>
+  <name>Network packets analysis extension for BeepBeep 3</name>
 
   <!-- The project's version number -->
-  <version>0.3-alpha</version>
+  <version>0.1</version>
 
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
   <author>Sylvain Hall&#233;</author>
 
   <!-- The project's main class -->
-  <mainclass>ca.uqac.lif.cep.json.PackageExtension</mainclass>
+  <mainclass>netp.PackageExtension</mainclass>
 
   <!-- Installation folders -->
   <srcdir>src</srcdir>
@@ -55,13 +55,5 @@
     Write JAR dependencies here.
   -->
   <dependencies>
-    <dependency>
-    <!-- json-lif. Used to parse JSON messages -->
-      <name>json-lif</name>
-      <classname>ca.uqac.lif.json.JsonMain</classname>
-      <files>
-        <zip>https://github.com/liflab/json-lif/releases/download/v1.4/json-lif-1.4.zip</zip>
-      </files>
-    </dependency>
   </dependencies>
 </build>
