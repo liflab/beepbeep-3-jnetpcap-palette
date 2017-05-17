@@ -18,16 +18,22 @@
 
 package netp.functions;
 
+import java.util.Set;
+
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.protocol.tcpip.Tcp;
 import org.jnetpcap.protocol.tcpip.Udp;
+
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 /**
  * PacketFunction to get source port from a network packet
  *
  */
-public class GetSourcePort extends PacketFunction {
+public class GetSourcePort extends SimpleFunction {
 
+	private JPacket packet;
 	private Tcp tcp;
 	private Udp udp;
 
@@ -37,19 +43,42 @@ public class GetSourcePort extends PacketFunction {
 		udp = new Udp();
 	}
 
-	/**
-	 * @param packet
-	 *            The packet to extract source port from
-	 */
 	@Override
-	public Integer getValue(JPacket packet) {
+	public void compute(Object[] inputs, Object[] outputs) {
+		packet = (JPacket) inputs[0];
 		if (packet.hasHeader(tcp)) {
-			return tcp.source();
+			outputs[0] = tcp.source();
 		}
 		if (packet.hasHeader(udp)) {
-			return udp.source();
+			outputs[0] = udp.source();
+		} else {
+			// TODO throw exception
 		}
-		return null;
+	}
+
+	@Override
+	public int getInputArity() {
+		return 1;
+	}
+
+	@Override
+	public int getOutputArity() {
+		return 1;
+	}
+
+	@Override
+	public void reset() {
+		// nothing
+	}
+
+	@Override
+	public Function clone() {
+		return new GetPacketSize();
+	}
+
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index) {
+		classes.add(JPacket.class);
 	}
 
 	@Override

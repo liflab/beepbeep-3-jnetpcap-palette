@@ -18,27 +18,54 @@
 
 package netp.functions;
 
+import java.util.Set;
+
 import org.jnetpcap.packet.JFlow;
 
-import netp.functions.FlowFunction;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 /**
  * FlowFunction to get a network flow size (number of packets in the flow)
  *
  */
-public class GetFlowSize extends FlowFunction {
+public class GetFlowSize extends SimpleFunction {
+
+	private JFlow flow;
 
 	public GetFlowSize() {
 		super();
 	}
 
-	/**
-	 * @param flow
-	 *            The flow to extract the number of packets from
-	 */
 	@Override
-	public Integer getValue(JFlow flow) {
-		return flow.size();
+	public void compute(Object[] inputs, Object[] outputs) {
+		flow = (JFlow) inputs[0];
+		outputs[0] = flow.size();
+	}
+
+	@Override
+	public int getInputArity() {
+		return 1;
+	}
+
+	@Override
+	public int getOutputArity() {
+		return 1;
+	}
+
+	@Override
+	public void reset() {
+		// nothing
+	}
+
+	@Override
+	public Function clone() {
+		return new GetFlowSize();
+	}
+
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index) {
+		classes.add(JFlow.class);
 	}
 
 	@Override

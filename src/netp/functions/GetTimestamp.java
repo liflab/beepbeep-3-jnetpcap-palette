@@ -18,25 +18,54 @@
 
 package netp.functions;
 
+import java.util.Set;
+
 import org.jnetpcap.packet.JPacket;
+
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 /**
  * PacketFunction to get the timestamp of a network packet
  * 
  */
-public class GetTimestamp extends PacketFunction {
+public class GetTimestamp extends SimpleFunction {
+
+	private JPacket packet;
 
 	public GetTimestamp() {
 		super();
 	}
 
-	/**
-	 * @param packet
-	 *            The packet to timestamp from
-	 */
 	@Override
-	public Long getValue(JPacket packet) {
-		return packet.getCaptureHeader().timestampInMillis();
+	public void compute(Object[] inputs, Object[] outputs) {
+		packet = (JPacket) inputs[0];
+		outputs[0] = packet.getCaptureHeader().timestampInMillis();
+	}
+
+	@Override
+	public int getInputArity() {
+		return 1;
+	}
+
+	@Override
+	public int getOutputArity() {
+		return 1;
+	}
+
+	@Override
+	public void reset() {
+		// nothing
+	}
+
+	@Override
+	public Function clone() {
+		return new GetTimestamp();
+	}
+
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index) {
+		classes.add(JPacket.class);
 	}
 
 	@Override

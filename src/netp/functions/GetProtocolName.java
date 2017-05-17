@@ -18,13 +18,19 @@
 
 package netp.functions;
 
+import java.util.Set;
+
 import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.format.FormatUtils;
+
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 /**
  * PacketFunction to get the protocol name of a network packet
  *
  */
-public class GetProtocolName extends PacketFunction {
+public class GetProtocolName extends SimpleFunction {
 
 	private GetProtocolId protocolId;
 	private int id;
@@ -35,17 +41,14 @@ public class GetProtocolName extends PacketFunction {
 		protocolId = new GetProtocolId();
 	}
 
-	/**
-	 * @param packet
-	 *            The packet to extract protocol name from
-	 */
 	@Override
-	public String getValue(JPacket packet) {
-
-		id = protocolId.getValue(packet);
-
-		// TODO add cases if necessary
+	public void compute(Object[] inputs, Object[] outputs) {
+		protocolId.compute(inputs, outputs);
+		id = (int) outputs[0];
 		switch (id) {
+		case 1:
+			result = "ICMP";
+			break;
 		case 4:
 			result = "IPv4";
 			break;
@@ -56,10 +59,40 @@ public class GetProtocolName extends PacketFunction {
 			result = "UDP";
 			break;
 		default:
-			result = "undefined";
+			result = "Undefined";
 			break;
 		}
-		return result;
+		outputs[0] = result;
+	}
+
+	@Override
+	public int getInputArity() {
+		return 1;
+	}
+
+	@Override
+	public int getOutputArity() {
+		return 1;
+	}
+
+	@Override
+	public void reset() {
+		// nothing
+	}
+
+	@Override
+	public Function clone() {
+		return new GetProtocolName();
+	}
+
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index) {
+		classes.add(JPacket.class);
+	}
+
+	@Override
+	public Class<?> getOutputTypeFor(int index) {
+		return String.class;
 	}
 
 }

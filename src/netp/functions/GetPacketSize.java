@@ -18,25 +18,55 @@
 
 package netp.functions;
 
+import java.util.Set;
+
 import org.jnetpcap.packet.JPacket;
+
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 /**
  * PacketFunction to get a network packet size (in bytes)
  *
  */
-public class GetPacketSize extends PacketFunction {
+public class GetPacketSize extends SimpleFunction {
+
+	private JPacket packet;
 
 	public GetPacketSize() {
 		super();
 	}
 
-	/**
-	 * @param packet
-	 *            The packet to extract the size length (in bytes) from
-	 */
 	@Override
-	public Integer getValue(JPacket packet) {
-		return packet.size();
+	public void compute(Object[] inputs, Object[] outputs) {
+		packet = (JPacket) inputs[0];
+		outputs[0] = packet.size();
+	}
+
+	@Override
+	public int getInputArity() {
+		return 1;
+	}
+
+	@Override
+	public int getOutputArity() {
+		return 1;
+	}
+
+	@Override
+	public void reset() {
+		// nothing
+
+	}
+
+	@Override
+	public Function clone() {
+		return new GetPacketSize();
+	}
+
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index) {
+		classes.add(JPacket.class);
 	}
 
 	@Override

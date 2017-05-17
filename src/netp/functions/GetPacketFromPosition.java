@@ -18,32 +18,75 @@
 
 package netp.functions;
 
+import java.util.Set;
+
 import org.jnetpcap.packet.JFlow;
 import org.jnetpcap.packet.JPacket;
 
-import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 /**
- * FlowIntegerFunction to get a network packet from a flow packet and his position
+ * FlowIntegerFunction to get a network packet from a flow packet and his
+ * position
  *
  */
-public class GetPacketFromPosition extends BinaryFunction<JFlow, Integer, JPacket> {
+public class GetPacketFromPosition extends SimpleFunction {
+
+	private JFlow flow;
+	private int position;
 
 	public GetPacketFromPosition() {
-		super(JFlow.class, Integer.class, JPacket.class);
+
 	}
 
-	/**
-	 * @param flow The flow to extract the packet from
-	 * @param i The position of the packet to extract
-	 */
 	@Override
-	public JPacket getValue(JFlow flow, Integer i) throws IndexOutOfBoundsException {
-		if(flow.size() > i) {
-			return flow.getAll().get(i);
+	public void compute(Object[] inputs, Object[] outputs) {
+		flow = (JFlow) inputs[0];
+		position = (int) inputs[1];
+		if (0 <= position && position < flow.size()) {
+			outputs[0] = flow.getAll().get(position);
+		} else {
+			// TODO throw exception
 		}
-		//TODO is it ok to throw an exception?
-		throw new IndexOutOfBoundsException();
+	}
+
+	@Override
+	public int getInputArity() {
+		return 2;
+	}
+
+	@Override
+	public int getOutputArity() {
+		return 1;
+	}
+
+	@Override
+	public void reset() {
+		// nothing
+
+	}
+
+	@Override
+	public Function clone() {
+		return new GetPacketFromPosition();
+	}
+
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index) {
+		switch (index) {
+		case 0:
+			classes.add(JFlow.class);
+			break;
+		case 1:
+			classes.add(Integer.class);
+			break;
+		}
+	}
+
+	@Override
+	public Class<?> getOutputTypeFor(int index) {
+		return JPacket.class;
 	}
 
 }

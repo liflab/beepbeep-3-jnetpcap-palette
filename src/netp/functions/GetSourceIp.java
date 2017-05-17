@@ -18,33 +18,67 @@
 
 package netp.functions;
 
+import java.util.Set;
+
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.network.Ip4;
+
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 /**
  * PacketFunction to get source IP from a network packet
  *
  */
-public class GetSourceIp extends PacketFunction {
+public class GetSourceIp extends SimpleFunction {
 
+	private JPacket packet;
 	private Ip4 ip4;
-	
+
 	public GetSourceIp() {
 		super();
 		ip4 = new Ip4();
 	}
 
-	/**
-	 * @param packet The packet to extract source IP from
-	 */
 	@Override
-	public String getValue(JPacket packet) {
-		
+	public void compute(Object[] inputs, Object[] outputs) {
+		packet = (JPacket) inputs[0];
 		if (packet.hasHeader(ip4)) {
-			return FormatUtils.ip(ip4.source());
+			outputs[0] = FormatUtils.ip(ip4.source());
+		} else {
+			// TODO throw exception
 		}
-		return null;
+	}
+
+	@Override
+	public int getInputArity() {
+		return 1;
+	}
+
+	@Override
+	public int getOutputArity() {
+		return 1;
+	}
+
+	@Override
+	public void reset() {
+		// nothing
+	}
+
+	@Override
+	public Function clone() {
+		return new GetSourceIp();
+	}
+
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index) {
+		classes.add(JPacket.class);
+	}
+
+	@Override
+	public Class<?> getOutputTypeFor(int index) {
+		return String.class;
 	}
 
 }

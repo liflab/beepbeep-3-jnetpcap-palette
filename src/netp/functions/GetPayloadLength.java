@@ -18,15 +18,21 @@
 
 package netp.functions;
 
+import java.util.Set;
+
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.Payload;
+
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 /**
  * PacketFunction to get payload packet lenght of a network packet (in bytes)
  *
  */
-public class GetPayloadLength extends PacketFunction {
+public class GetPayloadLength extends SimpleFunction {
 
+	private JPacket packet;
 	private Payload payload;
 
 	public GetPayloadLength() {
@@ -34,17 +40,39 @@ public class GetPayloadLength extends PacketFunction {
 		payload = new Payload();
 	}
 
-	/**
-	 * @param packet
-	 *            The packet to extract payload length (in bytes) from
-	 */
 	@Override
-	public Integer getValue(JPacket packet) {
-
+	public void compute(Object[] inputs, Object[] outputs) {
+		packet = (JPacket) inputs[0];
 		if (packet.hasHeader(payload)) {
-			return payload.getLength();
+			outputs[0] = payload.getLength();
+		} else {
+			// TODO throw exception
 		}
-		return null;
+	}
+
+	@Override
+	public int getInputArity() {
+		return 1;
+	}
+
+	@Override
+	public int getOutputArity() {
+		return 1;
+	}
+
+	@Override
+	public void reset() {
+		// nothing
+	}
+
+	@Override
+	public Function clone() {
+		return new GetPayloadLength();
+	}
+
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index) {
+		classes.add(JPacket.class);
 	}
 
 	@Override
