@@ -1,6 +1,8 @@
 .metadata
 bin/
 tmp/
+doc/
+dep/
 *.tmp
 *.bak
 *.swp
