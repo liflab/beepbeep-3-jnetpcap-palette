@@ -38,21 +38,21 @@ public class GetFlowSizeTest {
 		
 		FlowTransmitter flow = new FlowTransmitter();
 		try {
-			Connector.connect(source, flow, 0, 0);
+			Connector.connect(source, flow);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		FlowReader flowSize = new FlowReader(new GetFlowSize());
 		try {
-			Connector.connect(flow, flowSize, 0, 0);
+			Connector.connect(flow, flowSize);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(flowSize, sink, 0, 0);
+			Connector.connect(flowSize, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

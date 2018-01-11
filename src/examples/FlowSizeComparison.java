@@ -62,21 +62,21 @@ public class FlowSizeComparison {
 
 		FlowTransmitter flow = new FlowTransmitter();
 		try {
-			Connector.connect(source, flow, 0, 0);
+			Connector.connect(source, flow);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 		
 		FunctionProcessor hasFiveOrMore = new FunctionProcessor(new HasTwoPacketsOrMore());
 		try {
-			Connector.connect(flow, hasFiveOrMore, 0, 0);
+			Connector.connect(flow, hasFiveOrMore);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(hasFiveOrMore, sink, 0, 0);
+			Connector.connect(hasFiveOrMore, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

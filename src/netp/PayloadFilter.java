@@ -146,4 +146,8 @@ public class PayloadFilter extends SingleProcessor {
 		return false;
 	}
 
+	@Override
+	public Processor duplicate() {
+		return null;
+	}
 }

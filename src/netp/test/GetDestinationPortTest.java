@@ -37,14 +37,14 @@ public class GetDestinationPortTest {
 
 		PacketReader destPort = new PacketReader(new GetDestinationPort());
 		try {
-			Connector.connect(source, destPort, 0, 0);
+			Connector.connect(source, destPort);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(destPort, sink, 0, 0);
+			Connector.connect(destPort, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

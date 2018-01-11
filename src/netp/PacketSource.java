@@ -73,4 +73,8 @@ public class PacketSource extends Source {
 		return null;
 	}
 
+	@Override
+	public Processor duplicate() {
+		return null;
+	}
 }

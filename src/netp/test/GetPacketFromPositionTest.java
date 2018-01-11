@@ -43,7 +43,7 @@ public class GetPacketFromPositionTest {
 		
 		Fork fork = new Fork(2);
 		try {
-			Connector.connect(source, fork, 0, 0);
+			Connector.connect(source, fork);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +51,7 @@ public class GetPacketFromPositionTest {
 		FlowTransmitter flow = new FlowTransmitter();
 		PullConstant position = new PullConstant((Integer) 0);
 		try {
-			Connector.connect(fork, flow, 0, 0);
+			Connector.connect(fork, flow);
 			Connector.connect(fork, position, 1, 0);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class GetPacketFromPositionTest {
 		
 		PacketReader srcIp = new PacketReader(new GetSourceIp());
 		try {
-			Connector.connect(packet, srcIp, 0, 0);
+			Connector.connect(packet, srcIp);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
@@ -79,7 +79,7 @@ public class GetPacketFromPositionTest {
 		
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(srcIp, sink, 0, 0);
+			Connector.connect(srcIp, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

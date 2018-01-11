@@ -37,14 +37,14 @@ public class GetDestinationIpTest {
 
 		PacketReader destIp = new PacketReader(new GetDestinationIp());
 		try {
-			Connector.connect(source, destIp, 0, 0);
+			Connector.connect(source, destIp);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(destIp, sink, 0, 0);
+			Connector.connect(destIp, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

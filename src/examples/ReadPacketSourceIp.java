@@ -35,14 +35,14 @@ public class ReadPacketSourceIp {
 
 		FunctionProcessor srcIp = new FunctionProcessor(new GetSourceIp());
 		try {
-			Connector.connect(source, srcIp, 0, 0);
+			Connector.connect(source, srcIp);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(srcIp, sink, 0, 0);
+			Connector.connect(srcIp, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

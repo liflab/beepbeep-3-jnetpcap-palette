@@ -84,4 +84,9 @@ public class GetDestinationPort extends SimpleFunction {
 	public Class<?> getOutputTypeFor(int index) {
 		return Integer.class;
 	}
+
+	@Override
+	public Function duplicate() {
+		return null;
+	}
 }

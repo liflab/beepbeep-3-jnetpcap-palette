@@ -37,14 +37,14 @@ public class GetProtocolIdTest {
 
 		PacketReader protocol = new PacketReader(new GetProtocolId());
 		try {
-			Connector.connect(source, protocol, 0, 0);
+			Connector.connect(source, protocol);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(protocol, sink, 0, 0);
+			Connector.connect(protocol, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

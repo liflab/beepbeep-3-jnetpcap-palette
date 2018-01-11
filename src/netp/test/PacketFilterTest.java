@@ -42,10 +42,10 @@ public class PacketFilterTest {
 		source = new PacketSource("test.pcap");
 		
 		filter = new PacketFilter();
-		Connector.connect(source, filter, 0, 0);
+		Connector.connect(source, filter);
 		
 		sink = new QueueSink(1);
-		Connector.connect(filter, sink, 0, 0);
+		Connector.connect(filter, sink);
 		
 		output = new JPacket[20];
     }

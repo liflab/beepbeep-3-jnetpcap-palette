@@ -37,14 +37,14 @@ public class GetTimestampTest {
 
 		PacketReader timestp = new PacketReader(new GetTimestamp());
 		try {
-			Connector.connect(source, timestp, 0, 0);
+			Connector.connect(source, timestp);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(timestp, sink, 0, 0);
+			Connector.connect(timestp, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

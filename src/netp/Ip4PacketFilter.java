@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Queue;
 
+import ca.uqac.lif.cep.Processor;
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.protocol.network.Ip4;
 import org.jnetpcap.protocol.tcpip.Tcp;
@@ -290,4 +291,8 @@ public class Ip4PacketFilter extends SingleProcessor {
 		return clone;
 	}
 
+	@Override
+	public Processor duplicate() {
+		return null;
+	}
 }

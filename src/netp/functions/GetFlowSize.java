@@ -73,4 +73,8 @@ public class GetFlowSize extends SimpleFunction {
 		return Integer.class;
 	}
 
+	@Override
+	public Function duplicate() {
+		return null;
+	}
 }

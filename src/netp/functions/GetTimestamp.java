@@ -73,4 +73,8 @@ public class GetTimestamp extends SimpleFunction {
 		return Long.class;
 	}
 
+	@Override
+	public Function duplicate() {
+		return null;
+	}
 }

@@ -41,20 +41,20 @@ public class ReadFilteredPacketSourceIp {
 		// only keep UDP packets
 		Ip4PacketFilter packetFilter = new Ip4PacketFilter();
 		packetFilter.setProtocol(Ip4PacketFilter.UDP);
-		Connector.connect(source, packetFilter, 0, 0);
+		Connector.connect(source, packetFilter);
 
 		// only keep packets containing bytes 24 99 in payload
 		PayloadFilter payloadFilter = new PayloadFilter();
 		payloadFilter.setFilter("2499");
-		Connector.connect(packetFilter, payloadFilter, 0, 0);
+		Connector.connect(packetFilter, payloadFilter);
 
 		// extract source IP address of packet
 		FunctionProcessor sourceIp = new FunctionProcessor(new GetSourceIp());
-		Connector.connect(payloadFilter, sourceIp, 0, 0);
+		Connector.connect(payloadFilter, sourceIp);
 
 		// retrieve results
 		QueueSink sink = new QueueSink(1);
-		Connector.connect(sourceIp, sink, 0, 0);
+		Connector.connect(sourceIp, sink);
 
 		// compute the first 15 packets
 		for (int i = 0; i < 15; i++) {

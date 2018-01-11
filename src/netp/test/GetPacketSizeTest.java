@@ -37,14 +37,14 @@ public class GetPacketSizeTest {
 
 		PacketReader packetSize = new PacketReader(new GetPacketSize());
 		try {
-			Connector.connect(source, packetSize, 0, 0);
+			Connector.connect(source, packetSize);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(packetSize, sink, 0, 0);
+			Connector.connect(packetSize, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}

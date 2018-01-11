@@ -82,4 +82,8 @@ public class GetDestinationIp extends SimpleFunction {
 		// nothing
 	}
 
+	@Override
+	public Function duplicate() {
+		return null;
+	}
 }

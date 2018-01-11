@@ -69,4 +69,8 @@ public class FlowTransmitter extends SingleProcessor {
 		return clone;
 	}
 
+	@Override
+	public Processor duplicate() {
+		return null;
+	}
 }

@@ -92,4 +92,9 @@ public class NetworkInterfaceSource extends Source {
 	public String getInterfaceName(){
 		return interfaceName;
 	}
+
+	@Override
+	public Processor duplicate() {
+		return null;
+	}
 }

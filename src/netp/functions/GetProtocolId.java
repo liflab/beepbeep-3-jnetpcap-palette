@@ -80,4 +80,8 @@ public class GetProtocolId extends SimpleFunction {
 		return Integer.class;
 	}
 
+	@Override
+	public Function duplicate() {
+		return null;
+	}
 }

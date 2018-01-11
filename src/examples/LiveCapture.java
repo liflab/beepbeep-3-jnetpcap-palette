@@ -19,11 +19,11 @@ public class LiveCapture {
 
 		// extract source IP address of packet
 		FunctionProcessor sourceIp = new FunctionProcessor(new GetSourceIp());
-		Connector.connect(source, sourceIp, 0, 0);
+		Connector.connect(source, sourceIp);
 
 		// retrieve results
 		QueueSink sink = new QueueSink(1);
-		Connector.connect(sourceIp, sink, 0, 0);
+		Connector.connect(sourceIp, sink);
 
 		// compute the first 100 packets
 		for (int i = 0; i < 100; i++) {

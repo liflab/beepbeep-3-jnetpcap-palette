@@ -89,4 +89,8 @@ public class GetPacketFromPosition extends SimpleFunction {
 		return JPacket.class;
 	}
 
+	@Override
+	public Function duplicate() {
+		return null;
+	}
 }

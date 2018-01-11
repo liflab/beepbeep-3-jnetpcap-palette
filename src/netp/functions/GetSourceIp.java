@@ -81,4 +81,8 @@ public class GetSourceIp extends SimpleFunction {
 		return String.class;
 	}
 
+	@Override
+	public Function duplicate() {
+		return null;
+	}
 }

@@ -37,14 +37,14 @@ public class GetPayloadLengthTest {
 
 		PacketReader ploadL = new PacketReader(new GetPayloadLength());
 		try {
-			Connector.connect(source, ploadL, 0, 0);
+			Connector.connect(source, ploadL);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
 
 		QueueSink sink = new QueueSink(1);
 		try {
-			Connector.connect(ploadL, sink, 0, 0);
+			Connector.connect(ploadL, sink);
 		} catch (ConnectorException e) {
 			e.printStackTrace();
 		}
