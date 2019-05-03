@@ -37,7 +37,7 @@ alongside `beepbeep-3.jar`
 Contributors
 ------------
 
-The first version of this palette has been written in 2017 by
+The first version of this palette has been written in 2016 by
 [Pierre-Louis Faure](https://www.linkedin.com/in/plfaure) and
 [Théo Ménard](https://www.linkedin.com/in/theomenard). Further tweaks have been
 added by [Sylvain Hallé](http://leduotang.ca/sylvain), Professor at
