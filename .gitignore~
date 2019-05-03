@@ -1,9 +1,8 @@
 .metadata
-**/bin/
-**/tmp/
-**/lib/
-**/doc/
-**/dep/
+bin/
+tmp/
+doc/
+dep/
 *.tmp
 *.bak
 *.swp

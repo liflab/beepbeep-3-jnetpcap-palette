@@ -561,7 +561,7 @@
                         <include name="**/*.jar"/>
 		              </patternset>
 		              <mapper type="flatten"/>
-		            </untar>
+		            </unzip>
                   </actions>
                 </call>
               </xmltask>

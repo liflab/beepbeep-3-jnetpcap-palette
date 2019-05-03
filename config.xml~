@@ -99,7 +99,7 @@
         -->
         <tgz>http://managedway.dl.sourceforge.net/project/jnetpcap/jnetpcap/Latest/jnetpcap-1.4.r1425-1.linux64.x86_64.tgz</tgz>
       </files>
-      <bundle>true</bundle>
+      <bundle>false</bundle>
     </dependency>
   </dependencies>
 </build>
