@@ -28,27 +28,34 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * PacketFunction to get destination port from a network packet
  *
  */
-public class GetDestinationPort extends UnaryFunction<JPacket,Integer> {
+public class GetDestinationPort extends UnaryFunction<JPacket, Integer>
+{
 
-	private static Tcp tcp = new Tcp();
-	private static Udp udp = new Udp();
+  private static Tcp tcp = new Tcp();
+  private static Udp udp = new Udp();
 
-	public GetDestinationPort() {
-		super(JPacket.class, Integer.class);
-	}
+  public GetDestinationPort()
+  {
+    super(JPacket.class, Integer.class);
+  }
 
-	@Override
-	public Integer getValue(JPacket packet) {
-		if (packet.hasHeader(tcp)) {
-			return tcp.destination();
-		} else if (packet.hasHeader(udp)) {
-			return udp.destination();
-		}
-		return -1;
-	}
+  @Override
+  public Integer getValue(JPacket packet)
+  {
+    if (packet.hasHeader(tcp))
+    {
+      return tcp.destination();
+    }
+    else if (packet.hasHeader(udp))
+    {
+      return udp.destination();
+    }
+    return -1;
+  }
 
-	@Override
-	public GetDestinationPort duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetDestinationPort duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

@@ -29,32 +29,40 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketSource;
 import netp.functions.*;
 
-public class GetDestinationIpTest {
+public class GetDestinationIpTest
+{
 
-	@Test
-	public void getDestinationIpTest() {
-		PacketSource source = new PacketSource("test.pcap");
+  @Test
+  public void getDestinationIpTest()
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		ApplyFunction destIp = new ApplyFunction(new GetDestinationIp());
-		try {
-			Connector.connect(source, destIp);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    ApplyFunction destIp = new ApplyFunction(new GetDestinationIp());
+    try
+    {
+      Connector.connect(source, destIp);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(destIp, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(destIp, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		source.push();
-		String output = (String) sink.remove()[0];
-		System.out.println(output);
-		
-		String expected = "230.0.0.1";
-		assertEquals(expected, output);
-	}
+    source.push();
+    String output = (String) sink.remove()[0];
+    System.out.println(output);
+
+    String expected = "230.0.0.1";
+    assertEquals(expected, output);
+  }
 
 }

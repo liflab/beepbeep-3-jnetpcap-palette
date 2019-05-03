@@ -26,44 +26,49 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * PacketFunction to get the protocol name of a network packet
  *
  */
-public class GetProtocolName extends UnaryFunction<JPacket,String> {
+public class GetProtocolName extends UnaryFunction<JPacket, String>
+{
 
-	private static final Ip4 ip4 = new Ip4();
+  private static final Ip4 ip4 = new Ip4();
 
-	public GetProtocolName() {
-		super(JPacket.class, String.class);
-	}
+  public GetProtocolName()
+  {
+    super(JPacket.class, String.class);
+  }
 
-	@Override
-	public String getValue(JPacket packet) {
-		int id = -1;
-		String result = "Undefined";
-		if (packet.hasHeader(ip4)) {
-			id = ip4.type();
-		}
-		switch (id) {
-		case 1:
-			result = "ICMP";
-			break;
-		case 4:
-			result = "IPv4";
-			break;
-		case 6:
-			result = "TCP";
-			break;
-		case 17:
-			result = "UDP";
-			break;
-		default:
-			result = "Undefined";
-			break;
-		}
-		return result;
-	}
+  @Override
+  public String getValue(JPacket packet)
+  {
+    int id = -1;
+    String result = "Undefined";
+    if (packet.hasHeader(ip4))
+    {
+      id = ip4.type();
+    }
+    switch (id)
+    {
+    case 1:
+      result = "ICMP";
+      break;
+    case 4:
+      result = "IPv4";
+      break;
+    case 6:
+      result = "TCP";
+      break;
+    case 17:
+      result = "UDP";
+      break;
+    default:
+      result = "Undefined";
+      break;
+    }
+    return result;
+  }
 
-
-	@Override
-	public GetProtocolName duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetProtocolName duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

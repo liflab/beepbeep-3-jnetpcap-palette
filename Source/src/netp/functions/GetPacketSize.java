@@ -26,19 +26,23 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * PacketFunction to get a network packet size (in bytes)
  *
  */
-public class GetPacketSize extends UnaryFunction<JPacket,Integer> {
+public class GetPacketSize extends UnaryFunction<JPacket, Integer>
+{
 
-	public GetPacketSize() {
-		super(JPacket.class, Integer.class);
-	}
+  public GetPacketSize()
+  {
+    super(JPacket.class, Integer.class);
+  }
 
-	@Override
-	public Integer getValue(JPacket packet) {
-		return packet.size();
-	}
+  @Override
+  public Integer getValue(JPacket packet)
+  {
+    return packet.size();
+  }
 
-	@Override
-	public GetPacketSize duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetPacketSize duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

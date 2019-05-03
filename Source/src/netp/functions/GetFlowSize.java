@@ -26,19 +26,23 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * FlowFunction to get a network flow size (number of packets in the flow)
  *
  */
-public class GetFlowSize extends UnaryFunction<JFlow,Integer> {
+public class GetFlowSize extends UnaryFunction<JFlow, Integer>
+{
 
-	public GetFlowSize() {
-		super(JFlow.class, Integer.class);
-	}
+  public GetFlowSize()
+  {
+    super(JFlow.class, Integer.class);
+  }
 
-	@Override
-	public Integer getValue(JFlow flow) {
-		return flow.size();
-	}
+  @Override
+  public Integer getValue(JFlow flow)
+  {
+    return flow.size();
+  }
 
-	@Override
-	public GetFlowSize duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetFlowSize duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

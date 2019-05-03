@@ -29,32 +29,40 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketSource;
 import netp.functions.GetPacketSize;
 
-public class GetPacketSizeTest {
+public class GetPacketSizeTest
+{
 
-	@Test
-	public void getPacketSizeTest() {
-		PacketSource source = new PacketSource("test.pcap");
+  @Test
+  public void getPacketSizeTest()
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		ApplyFunction packetSize = new ApplyFunction(new GetPacketSize());
-		try {
-			Connector.connect(source, packetSize);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    ApplyFunction packetSize = new ApplyFunction(new GetPacketSize());
+    try
+    {
+      Connector.connect(source, packetSize);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(packetSize, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(packetSize, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		source.push();
-		Integer output = (Integer) sink.remove()[0];
-		System.out.println(output);
-		
-		Integer expected = 553;
-		assertEquals(expected, output);
-	}
+    source.push();
+    Integer output = (Integer) sink.remove()[0];
+    System.out.println(output);
+
+    Integer expected = 553;
+    assertEquals(expected, output);
+  }
 
 }

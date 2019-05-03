@@ -33,44 +33,49 @@ import ca.uqac.lif.cep.SynchronousProcessor;
  * outputs its corresponding flow. This flow is temporary, and will be output
  * again each time a new packet is added to it.
  */
-public class FlowTransmitter extends SynchronousProcessor {
+public class FlowTransmitter extends SynchronousProcessor
+{
 
-	private JFlowMap flowMap;
-	private JPacket packet;
-	private JFlowKey key;
+  private JFlowMap flowMap;
+  private JPacket packet;
+  private JFlowKey key;
 
-	public FlowTransmitter() {
-		super(1, 1);
-		flowMap = new JFlowMap();
-	}
-	
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) {
-		packet = (JPacket) inputs[0];
+  public FlowTransmitter()
+  {
+    super(1, 1);
+    flowMap = new JFlowMap();
+  }
 
-		// store packet in flow map
-		flowMap.nextPacket((PcapPacket) packet, null);
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    packet = (JPacket) inputs[0];
 
-		// output flow
-		key = packet.getState().getFlowKey();
-		Object[] out = new Object[1];
-		out[0] = flowMap.get(key);
-		outputs.add(out);
-		return true;
+    // store packet in flow map
+    flowMap.nextPacket((PcapPacket) packet, null);
 
-		// TODO output flow only after a succession of packets from the same
-		// flow has ended.
-	}
+    // output flow
+    key = packet.getState().getFlowKey();
+    Object[] out = new Object[1];
+    out[0] = flowMap.get(key);
+    outputs.add(out);
+    return true;
 
-	@Override
-	public Processor clone() {
-		FlowTransmitter clone = new FlowTransmitter();
-		clone.flowMap = (JFlowMap) flowMap.clone();
-		return clone;
-	}
+    // TODO output flow only after a succession of packets from the same
+    // flow has ended.
+  }
 
-	@Override
-	public Processor duplicate(boolean with_state) {
-		return null;
-	}
+  @Override
+  public Processor clone()
+  {
+    FlowTransmitter clone = new FlowTransmitter();
+    clone.flowMap = (JFlowMap) flowMap.clone();
+    return clone;
+  }
+
+  @Override
+  public Processor duplicate(boolean with_state)
+  {
+    return null;
+  }
 }

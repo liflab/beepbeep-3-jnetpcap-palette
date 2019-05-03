@@ -29,32 +29,40 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketSource;
 import netp.functions.GetTimestamp;
 
-public class GetTimestampTest {
+public class GetTimestampTest
+{
 
-	@Test
-	public void getTimestampTest() {
-		PacketSource source = new PacketSource("test.pcap");
+  @Test
+  public void getTimestampTest()
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		ApplyFunction timestp = new ApplyFunction(new GetTimestamp());
-		try {
-			Connector.connect(source, timestp);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    ApplyFunction timestp = new ApplyFunction(new GetTimestamp());
+    try
+    {
+      Connector.connect(source, timestp);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(timestp, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(timestp, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		source.push();
-		Long output = (Long) sink.remove()[0];
-		System.out.println(output);
-		
-		Long expected = 1478555321945L;
-		assertEquals(expected, output);
-	}
+    source.push();
+    Long output = (Long) sink.remove()[0];
+    System.out.println(output);
+
+    Long expected = 1478555321945L;
+    assertEquals(expected, output);
+  }
 
 }

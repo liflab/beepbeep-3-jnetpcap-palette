@@ -28,30 +28,39 @@ import netp.functions.GetSourceIp;
 /**
  * Displays the destination IP for each packet
  */
-public class ReadPacketSourceIp {
-	
-	public static void main(String[] args) throws ConnectorException {
-		PacketSource source = new PacketSource("test.pcap");
+public class ReadPacketSourceIp
+{
 
-		ApplyFunction srcIp = new ApplyFunction(new GetSourceIp());
-		try {
-			Connector.connect(source, srcIp);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+  public static void main(String[] args) throws ConnectorException
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(srcIp, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		// compute the first 15 packets
-		for (int i = 0; i < 15; i++) {
-			source.push();
-			String output = (String) sink.remove()[0];
-			System.out.println(i + ": " + output);
-		}
-	}
+    ApplyFunction srcIp = new ApplyFunction(new GetSourceIp());
+    try
+    {
+      Connector.connect(source, srcIp);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(srcIp, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    // compute the first 15 packets
+    for (int i = 0; i < 15; i++)
+    {
+      source.push();
+      String output = (String) sink.remove()[0];
+      System.out.println(i + ": " + output);
+    }
+  }
 }

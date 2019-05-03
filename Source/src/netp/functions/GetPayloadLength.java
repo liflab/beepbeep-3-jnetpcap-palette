@@ -27,25 +27,30 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * PacketFunction to get payload packet lenght of a network packet (in bytes)
  *
  */
-public class GetPayloadLength extends UnaryFunction<JPacket,Integer> {
+public class GetPayloadLength extends UnaryFunction<JPacket, Integer>
+{
 
-	private Payload payload;
+  private Payload payload;
 
-	public GetPayloadLength() {
-		super(JPacket.class, Integer.class);
-		payload = new Payload();
-	}
+  public GetPayloadLength()
+  {
+    super(JPacket.class, Integer.class);
+    payload = new Payload();
+  }
 
-	@Override
-	public Integer getValue(JPacket packet) {
-		if (packet.hasHeader(payload)) {
-			return payload.getLength();
-		}
-		return -1;
-	}
+  @Override
+  public Integer getValue(JPacket packet)
+  {
+    if (packet.hasHeader(payload))
+    {
+      return payload.getLength();
+    }
+    return -1;
+  }
 
-	@Override
-	public GetPayloadLength duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetPayloadLength duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

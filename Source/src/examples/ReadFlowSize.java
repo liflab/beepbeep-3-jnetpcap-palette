@@ -29,37 +29,49 @@ import netp.functions.GetFlowSize;
 /**
  * Displays the size of each arriving flow
  */
-public class ReadFlowSize {
-	
-	public static void main(String[] args) throws ConnectorException {
-		PacketSource source = new PacketSource("test.pcap");
+public class ReadFlowSize
+{
 
-		FlowTransmitter flow = new FlowTransmitter();
-		try {
-			Connector.connect(source, flow);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		ApplyFunction flowSize = new ApplyFunction(new GetFlowSize());
-		try {
-			Connector.connect(flow, flowSize);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+  public static void main(String[] args) throws ConnectorException
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(flowSize, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		// compute the first 15 packets
-		for (int i = 0; i < 15; i++) {
-			source.push();
-			Integer output = (Integer) sink.remove()[0];
-			System.out.println(i + ": " + output);
-		}
-	}
+    FlowTransmitter flow = new FlowTransmitter();
+    try
+    {
+      Connector.connect(source, flow);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    ApplyFunction flowSize = new ApplyFunction(new GetFlowSize());
+    try
+    {
+      Connector.connect(flow, flowSize);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(flowSize, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    // compute the first 15 packets
+    for (int i = 0; i < 15; i++)
+    {
+      source.push();
+      Integer output = (Integer) sink.remove()[0];
+      System.out.println(i + ": " + output);
+    }
+  }
 }

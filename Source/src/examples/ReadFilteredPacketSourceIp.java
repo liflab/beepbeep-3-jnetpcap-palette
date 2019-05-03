@@ -28,42 +28,45 @@ import netp.PayloadFilter;
 import netp.functions.GetSourceIp;
 
 /**
- * Displays the source IP only from UDP packets containing byte 24 and 99
- * This example uses PacketFilter and PayloadFilter classes
+ * Displays the source IP only from UDP packets containing byte 24 and 99 This
+ * example uses PacketFilter and PayloadFilter classes
  */
-public class ReadFilteredPacketSourceIp {
-	
-	public static void main(String[] args) throws ConnectorException {
+public class ReadFilteredPacketSourceIp
+{
 
-		// outputs packets from a pcap file
-		PacketSource source = new PacketSource("test.pcap");
+  public static void main(String[] args) throws ConnectorException
+  {
 
-		// only keep UDP packets
-		Ip4PacketFilter packetFilter = new Ip4PacketFilter();
-		packetFilter.setProtocol(Ip4PacketFilter.UDP);
-		Connector.connect(source, packetFilter);
+    // outputs packets from a pcap file
+    PacketSource source = new PacketSource("test.pcap");
 
-		// only keep packets containing bytes 24 99 in payload
-		PayloadFilter payloadFilter = new PayloadFilter();
-		payloadFilter.setFilter("2499");
-		Connector.connect(packetFilter, payloadFilter);
+    // only keep UDP packets
+    Ip4PacketFilter packetFilter = new Ip4PacketFilter();
+    packetFilter.setProtocol(Ip4PacketFilter.UDP);
+    Connector.connect(source, packetFilter);
 
-		// extract source IP address of packet
-		ApplyFunction sourceIp = new ApplyFunction(new GetSourceIp());
-		Connector.connect(payloadFilter, sourceIp);
+    // only keep packets containing bytes 24 99 in payload
+    PayloadFilter payloadFilter = new PayloadFilter();
+    payloadFilter.setFilter("2499");
+    Connector.connect(packetFilter, payloadFilter);
 
-		// retrieve results
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(sourceIp, sink);
+    // extract source IP address of packet
+    ApplyFunction sourceIp = new ApplyFunction(new GetSourceIp());
+    Connector.connect(payloadFilter, sourceIp);
 
-		// compute the first 15 packets
-		for (int i = 0; i < 15; i++) {
-			source.push();
-			String output = (String) sink.remove()[0];
-			if (output != null) // only display the packets that went through
-								// the filters
-				System.out.println(i + ": " + output);
-		}
-	}
+    // retrieve results
+    QueueSink sink = new QueueSink(1);
+    Connector.connect(sourceIp, sink);
+
+    // compute the first 15 packets
+    for (int i = 0; i < 15; i++)
+    {
+      source.push();
+      String output = (String) sink.remove()[0];
+      if (output != null) // only display the packets that went through
+        // the filters
+        System.out.println(i + ": " + output);
+    }
+  }
 
 }

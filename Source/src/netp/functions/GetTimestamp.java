@@ -26,19 +26,23 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * PacketFunction to get the timestamp of a network packet
  * 
  */
-public class GetTimestamp extends UnaryFunction<JPacket,Number> {
+public class GetTimestamp extends UnaryFunction<JPacket, Number>
+{
 
-	public GetTimestamp() {
-		super(JPacket.class, Number.class);
-	}
+  public GetTimestamp()
+  {
+    super(JPacket.class, Number.class);
+  }
 
-	@Override
-	public Number getValue(JPacket packet) {
-		return packet.getCaptureHeader().timestampInMillis();
-	}
+  @Override
+  public Number getValue(JPacket packet)
+  {
+    return packet.getCaptureHeader().timestampInMillis();
+  }
 
-	@Override
-	public GetTimestamp duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetTimestamp duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

@@ -27,24 +27,29 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * PacketFunction to get the protocol id of a network packet
  *
  */
-public class GetProtocolId extends UnaryFunction<JPacket,Integer> {
+public class GetProtocolId extends UnaryFunction<JPacket, Integer>
+{
 
-	private static final Ip4 ip4 = new Ip4();
+  private static final Ip4 ip4 = new Ip4();
 
-	public GetProtocolId() {
-		super(JPacket.class, Integer.class);
-	}
+  public GetProtocolId()
+  {
+    super(JPacket.class, Integer.class);
+  }
 
-	@Override
-	public Integer getValue(JPacket packet)  {
-		if (packet.hasHeader(ip4)) {
-			return ip4.type();
-		}
-		return -1;
-	}
+  @Override
+  public Integer getValue(JPacket packet)
+  {
+    if (packet.hasHeader(ip4))
+    {
+      return ip4.type();
+    }
+    return -1;
+  }
 
-	@Override
-	public GetProtocolId duplicate(boolean with_state) {
-		return null;
-	}
+  @Override
+  public GetProtocolId duplicate(boolean with_state)
+  {
+    return null;
+  }
 }

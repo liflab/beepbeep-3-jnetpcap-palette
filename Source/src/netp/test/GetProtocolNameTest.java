@@ -29,32 +29,40 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketSource;
 import netp.functions.GetProtocolName;
 
-public class GetProtocolNameTest {
+public class GetProtocolNameTest
+{
 
-	@Test
-	public void getProtocolNameTest() {
-		PacketSource source = new PacketSource("test.pcap");
+  @Test
+  public void getProtocolNameTest()
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		ApplyFunction protocol = new ApplyFunction(new GetProtocolName());
-		try {
-			Connector.connect(source, protocol);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    ApplyFunction protocol = new ApplyFunction(new GetProtocolName());
+    try
+    {
+      Connector.connect(source, protocol);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(protocol, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(protocol, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		source.push();
-		String output = (String) sink.remove()[0];
-		System.out.println(output);
-		
-		String expected = "UDP";
-		assertEquals(expected, output);
-	}
+    source.push();
+    String output = (String) sink.remove()[0];
+    System.out.println(output);
+
+    String expected = "UDP";
+    assertEquals(expected, output);
+  }
 
 }

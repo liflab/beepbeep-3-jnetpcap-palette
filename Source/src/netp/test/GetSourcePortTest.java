@@ -29,32 +29,40 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketSource;
 import netp.functions.GetSourcePort;
 
-public class GetSourcePortTest {
+public class GetSourcePortTest
+{
 
-	@Test
-	public void getSourcePortTest() {
-		PacketSource source = new PacketSource("test.pcap");
+  @Test
+  public void getSourcePortTest()
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		ApplyFunction srcPort = new ApplyFunction(new GetSourcePort());
-		try {
-			Connector.connect(source, srcPort);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    ApplyFunction srcPort = new ApplyFunction(new GetSourcePort());
+    try
+    {
+      Connector.connect(source, srcPort);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(srcPort, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(srcPort, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		source.push();
-		Integer output = (Integer) sink.remove()[0];
-		System.out.println(output);
-		
-		Integer expected = 50696;
-		assertEquals(expected, output);
-	}
+    source.push();
+    Integer output = (Integer) sink.remove()[0];
+    System.out.println(output);
+
+    Integer expected = 50696;
+    assertEquals(expected, output);
+  }
 
 }

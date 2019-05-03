@@ -33,48 +33,59 @@ import ca.uqac.lif.cep.tmf.Source;
  * Outputs packets from a source .pcap file
  *
  */
-public class PacketSource extends Source {
+public class PacketSource extends Source
+{
 
-	private Pcap pcap;
+  private Pcap pcap;
 
-	private PcapPacketHandler<PcapPacketArrayList> jpacketHandler = new PcapPacketHandler<PcapPacketArrayList>() {
-		public void nextPacket(PcapPacket packet, PcapPacketArrayList PacketsList) {
-			PacketsList.add(packet);
-		}
-	};
+  private PcapPacketHandler<PcapPacketArrayList> jpacketHandler = new PcapPacketHandler<PcapPacketArrayList>()
+  {
+    public void nextPacket(PcapPacket packet, PcapPacketArrayList PacketsList)
+    {
+      PacketsList.add(packet);
+    }
+  };
 
-	public PacketSource(String fileName) {
-		super(1);
+  public PacketSource(String fileName)
+  {
+    super(1);
 
-		final StringBuilder errbuf = new StringBuilder();
-		pcap = Pcap.openOffline(fileName, errbuf);
-		if (pcap == null) {
-			try {
-				throw new FileNotFoundException(errbuf.toString());
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) {
-		PcapPacketArrayList packets = new PcapPacketArrayList();
-		pcap.loop(1, jpacketHandler, packets);
-		Object[] out = new Object[1];
-		out[0] = packets.get(0);
-		outputs.add(out);
-		return true;
-	}
+    final StringBuilder errbuf = new StringBuilder();
+    pcap = Pcap.openOffline(fileName, errbuf);
+    if (pcap == null)
+    {
+      try
+      {
+        throw new FileNotFoundException(errbuf.toString());
+      }
+      catch (FileNotFoundException e)
+      {
+        e.printStackTrace();
+      }
+    }
+  }
 
-	@Override
-	public Processor clone() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    PcapPacketArrayList packets = new PcapPacketArrayList();
+    pcap.loop(1, jpacketHandler, packets);
+    Object[] out = new Object[1];
+    out[0] = packets.get(0);
+    outputs.add(out);
+    return true;
+  }
 
-	@Override
-	public Processor duplicate(boolean with_state) {
-		return null;
-	}
+  @Override
+  public Processor clone()
+  {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Processor duplicate(boolean with_state)
+  {
+    return null;
+  }
 }

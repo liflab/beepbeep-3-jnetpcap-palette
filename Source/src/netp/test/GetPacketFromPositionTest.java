@@ -33,63 +33,79 @@ import netp.PacketSource;
 import netp.functions.GetPacketFromPosition;
 import netp.functions.GetSourceIp;
 
-public class GetPacketFromPositionTest {
+public class GetPacketFromPositionTest
+{
 
-	//TODO complete this test !!!!!!
-	@Test
-	public void getPacketFromPositionTest() {
-		PacketSource source = new PacketSource("test.pcap");
-		
-		Fork fork = new Fork(2);
-		try {
-			Connector.connect(source, fork);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		FlowTransmitter flow = new FlowTransmitter();
-		TurnInto position = new TurnInto((Integer) 0);
-		try {
-			Connector.connect(fork, flow);
-			Connector.connect(fork, 1, position, 0);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		ApplyFunction packet = new ApplyFunction(new GetPacketFromPosition());
-		try {
-			Connector.connect(flow, position, packet);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		ApplyFunction srcIp = new ApplyFunction(new GetSourceIp());
-		try {
-			Connector.connect(packet, srcIp);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		/*
-		Pullable p = srcIp.getPullableOutput();
-		String output = (String) p.pull();
-		System.out.println(output);
-		*/
-		
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(srcIp, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		source.push();
-		String output = (String) sink.remove()[0];
-		System.out.println(output);
-		
-		String expected = "172.16.24.194";
-		assertEquals(expected, output);
-		
-	}
+  // TODO complete this test !!!!!!
+  @Test
+  public void getPacketFromPositionTest()
+  {
+    PacketSource source = new PacketSource("test.pcap");
+
+    Fork fork = new Fork(2);
+    try
+    {
+      Connector.connect(source, fork);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    FlowTransmitter flow = new FlowTransmitter();
+    TurnInto position = new TurnInto((Integer) 0);
+    try
+    {
+      Connector.connect(fork, flow);
+      Connector.connect(fork, 1, position, 0);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    ApplyFunction packet = new ApplyFunction(new GetPacketFromPosition());
+    try
+    {
+      Connector.connect(flow, position, packet);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    ApplyFunction srcIp = new ApplyFunction(new GetSourceIp());
+    try
+    {
+      Connector.connect(packet, srcIp);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    /*
+     * Pullable p = srcIp.getPullableOutput(); String output = (String) p.pull();
+     * System.out.println(output);
+     */
+
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(srcIp, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    source.push();
+    String output = (String) sink.remove()[0];
+    System.out.println(output);
+
+    String expected = "172.16.24.194";
+    assertEquals(expected, output);
+
+  }
 
 }

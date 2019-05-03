@@ -19,6 +19,7 @@ package netp;
 
 /**
  * Dummy main file
+ * 
  * @author Sylvain Hallé
  */
 public class Main

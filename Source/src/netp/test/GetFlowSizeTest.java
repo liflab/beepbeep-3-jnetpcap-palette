@@ -30,39 +30,50 @@ import netp.FlowTransmitter;
 import netp.PacketSource;
 import netp.functions.GetFlowSize;
 
-public class GetFlowSizeTest {
+public class GetFlowSizeTest
+{
 
-	@Test
-	public void getFlowSizeTest() {
-		PacketSource source = new PacketSource("test.pcap");
-		
-		FlowTransmitter flow = new FlowTransmitter();
-		try {
-			Connector.connect(source, flow);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+  @Test
+  public void getFlowSizeTest()
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		ApplyFunction flowSize = new ApplyFunction(new GetFlowSize());
-		try {
-			Connector.connect(flow, flowSize);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    FlowTransmitter flow = new FlowTransmitter();
+    try
+    {
+      Connector.connect(source, flow);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(flowSize, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    ApplyFunction flowSize = new ApplyFunction(new GetFlowSize());
+    try
+    {
+      Connector.connect(flow, flowSize);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		source.push();
-		Integer output = (Integer) sink.remove()[0];
-		System.out.println(output);
-		
-		Integer expected = 1;
-		assertEquals(expected, output);
-	}
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(flowSize, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    source.push();
+    Integer output = (Integer) sink.remove()[0];
+    System.out.println(output);
+
+    Integer expected = 1;
+    assertEquals(expected, output);
+  }
 
 }

@@ -29,32 +29,40 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import netp.PacketSource;
 import netp.functions.GetProtocolId;
 
-public class GetProtocolIdTest {
+public class GetProtocolIdTest
+{
 
-	@Test
-	public void getProtocolIdTest() {
-		PacketSource source = new PacketSource("test.pcap");
+  @Test
+  public void getProtocolIdTest()
+  {
+    PacketSource source = new PacketSource("test.pcap");
 
-		ApplyFunction protocol = new ApplyFunction(new GetProtocolId());
-		try {
-			Connector.connect(source, protocol);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    ApplyFunction protocol = new ApplyFunction(new GetProtocolId());
+    try
+    {
+      Connector.connect(source, protocol);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(protocol, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(protocol, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
 
-		source.push();
-		Integer output = (Integer) sink.remove()[0];
-		System.out.println(output);
-		
-		Integer expected = 17;
-		assertEquals(expected, output);
-	}
+    source.push();
+    Integer output = (Integer) sink.remove()[0];
+    System.out.println(output);
+
+    Integer expected = 17;
+    assertEquals(expected, output);
+  }
 
 }

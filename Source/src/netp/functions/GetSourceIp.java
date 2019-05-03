@@ -28,24 +28,29 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * PacketFunction to get source IP from a network packet
  *
  */
-public class GetSourceIp extends UnaryFunction<JPacket,String> {
+public class GetSourceIp extends UnaryFunction<JPacket, String>
+{
 
-	private static final Ip4 ip4 = new Ip4();
+  private static final Ip4 ip4 = new Ip4();
 
-	public GetSourceIp() {
-		super(JPacket.class, String.class);
-	}
+  public GetSourceIp()
+  {
+    super(JPacket.class, String.class);
+  }
 
-	@Override
-	public String getValue(JPacket packet) {
-		if (packet.hasHeader(ip4)) {
-			return FormatUtils.ip(ip4.source());
-		}
-		return "";
-	}
+  @Override
+  public String getValue(JPacket packet)
+  {
+    if (packet.hasHeader(ip4))
+    {
+      return FormatUtils.ip(ip4.source());
+    }
+    return "";
+  }
 
-	@Override
-	public GetSourceIp duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetSourceIp duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

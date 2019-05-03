@@ -28,23 +28,30 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  * position
  *
  */
-public class GetPacketFromPosition extends BinaryFunction<JFlow,Integer,JPacket> {
+public class GetPacketFromPosition extends BinaryFunction<JFlow, Integer, JPacket>
+{
 
-	public GetPacketFromPosition() {
-		super(JFlow.class, Integer.class, JPacket.class);
-	}
+  public GetPacketFromPosition()
+  {
+    super(JFlow.class, Integer.class, JPacket.class);
+  }
 
-	@Override
-	public JPacket getValue(JFlow flow, Integer position) {
-		if (0 <= position && position < flow.size()) {
-			return flow.getAll().get(position);
-		} else {
-			return null;
-		}
-	}
+  @Override
+  public JPacket getValue(JFlow flow, Integer position)
+  {
+    if (0 <= position && position < flow.size())
+    {
+      return flow.getAll().get(position);
+    }
+    else
+    {
+      return null;
+    }
+  }
 
-	@Override
-	public GetPacketFromPosition duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetPacketFromPosition duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

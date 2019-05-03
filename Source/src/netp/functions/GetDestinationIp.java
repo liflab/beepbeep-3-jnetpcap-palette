@@ -28,26 +28,33 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * PacketFunction to get destination IP from a network packet
  *
  */
-public class GetDestinationIp extends UnaryFunction<JPacket,String> {
+public class GetDestinationIp extends UnaryFunction<JPacket, String>
+{
 
-	private static Ip4 ip4 = new Ip4();
+  private static Ip4 ip4 = new Ip4();
 
-	public GetDestinationIp() {
-		super(JPacket.class, String.class);
-	}
+  public GetDestinationIp()
+  {
+    super(JPacket.class, String.class);
+  }
 
-	@Override
-	public String getValue(JPacket packet) {
-		if (packet.hasHeader(ip4)) {
-			return FormatUtils.ip(ip4.destination());
-		} else {
-			return null;
-		}
+  @Override
+  public String getValue(JPacket packet)
+  {
+    if (packet.hasHeader(ip4))
+    {
+      return FormatUtils.ip(ip4.destination());
+    }
+    else
+    {
+      return null;
+    }
 
-	}
+  }
 
-	@Override
-	public GetDestinationIp duplicate(boolean with_state) {
-		return this;
-	}
+  @Override
+  public GetDestinationIp duplicate(boolean with_state)
+  {
+    return this;
+  }
 }

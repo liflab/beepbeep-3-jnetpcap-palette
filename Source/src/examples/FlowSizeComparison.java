@@ -29,64 +29,81 @@ import netp.FlowTransmitter;
 import netp.PacketSource;
 
 /**
- * Return true if a flow has two packets or more
- * In this example we create a new FlowFunction
+ * Return true if a flow has two packets or more In this example we create a new
+ * FlowFunction
  */
-public class FlowSizeComparison {
-	
-	public static void main(String[] args) throws ConnectorException {
-		
-		/**
-		 * FlowFunction to know if a packet has two (or more) packets, or not
-		 */
-		class HasTwoPacketsOrMore extends UnaryFunction<JFlow, Boolean> {
-			
-			public HasTwoPacketsOrMore() {
-				super(JFlow.class, Boolean.class);
-			}
+public class FlowSizeComparison
+{
 
-			/**
-			 * @param flow The flow we want to compare the size
-			 */
-			@Override
-			public Boolean getValue(JFlow flow) {
-				Integer size = flow.size();
-				if (size >= 2) {
-					return true;
-				}
-				return false;
-			}
-		}
-		
-		PacketSource source = new PacketSource("test.pcap");
+  public static void main(String[] args) throws ConnectorException
+  {
 
-		FlowTransmitter flow = new FlowTransmitter();
-		try {
-			Connector.connect(source, flow);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		ApplyFunction hasFiveOrMore = new ApplyFunction(new HasTwoPacketsOrMore());
-		try {
-			Connector.connect(flow, hasFiveOrMore);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
+    /**
+     * FlowFunction to know if a packet has two (or more) packets, or not
+     */
+    class HasTwoPacketsOrMore extends UnaryFunction<JFlow, Boolean>
+    {
 
-		QueueSink sink = new QueueSink(1);
-		try {
-			Connector.connect(hasFiveOrMore, sink);
-		} catch (ConnectorException e) {
-			e.printStackTrace();
-		}
-		
-		// compute the first 15 packets
-		for (int i = 0; i < 15; i++) {
-			source.push();
-			Boolean output = (Boolean) sink.remove()[0];
-			System.out.println(i + ": " + output);
-		}
-	}
+      public HasTwoPacketsOrMore()
+      {
+        super(JFlow.class, Boolean.class);
+      }
+
+      /**
+       * @param flow
+       *          The flow we want to compare the size
+       */
+      @Override
+      public Boolean getValue(JFlow flow)
+      {
+        Integer size = flow.size();
+        if (size >= 2)
+        {
+          return true;
+        }
+        return false;
+      }
+    }
+
+    PacketSource source = new PacketSource("test.pcap");
+
+    FlowTransmitter flow = new FlowTransmitter();
+    try
+    {
+      Connector.connect(source, flow);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    ApplyFunction hasFiveOrMore = new ApplyFunction(new HasTwoPacketsOrMore());
+    try
+    {
+      Connector.connect(flow, hasFiveOrMore);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    QueueSink sink = new QueueSink(1);
+    try
+    {
+      Connector.connect(hasFiveOrMore, sink);
+    }
+    catch (ConnectorException e)
+    {
+      e.printStackTrace();
+    }
+
+    // compute the first 15 packets
+    for (int i = 0; i < 15; i++)
+    {
+      source.push();
+      Boolean output = (Boolean) sink.remove()[0];
+      System.out.println(i + ": " + output);
+    }
+  }
 
 }
