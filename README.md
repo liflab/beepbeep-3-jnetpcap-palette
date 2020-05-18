@@ -3,8 +3,8 @@ NetP: A BeepBeep palette for network packets
 
 This project is an extension to the [BeepBeep
 3](https://liflab.github.io/beepbeep-3), event stream processing engine,
-called a *palette*, that provides functionalities for processing
-network captures.
+called a *palette*, that provides functionalities for processing network
+captures.
 
 Building this palette
 ---------------------
@@ -30,16 +30,18 @@ typing:
 
     ant
 
-This will produce a file called `pattheminer.jar` in the folder. This file
+This will produce a file called `netp.jar` in the folder. This file
 is *not* runnable and stand-alone. It is meant to be used in a Java project
 alongside `beepbeep-3.jar`
 
 Contributors
 ------------
 
-The first version of this palette has been written in 2016 by
-[Pierre-Louis Faure](https://www.linkedin.com/in/plfaure) and
-[Théo Ménard](https://www.linkedin.com/in/theomenard). Further tweaks have been
-added by [Sylvain Hallé](http://leduotang.ca/sylvain), Professor at
+The first version of this palette has been written in 2016 by [Pierre-Louis
+Faure](https://www.linkedin.com/in/plfaure) and [Théo
+Ménard](https://www.linkedin.com/in/theomenard). Further tweaks have been
+added by [Sylvain Hallé](https://leduotang.ca/sylvain), Full Professor at
 [Université du Québec à Chicoutimi](http://www.uqac.ca) and head of
 [Laboratoire d'informatique formelle](http://liflab.ca) (LIF).
+
+<!-- :maxLineLen=76: -->
