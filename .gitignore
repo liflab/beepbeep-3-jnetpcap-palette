@@ -2,7 +2,6 @@
 **/bin/
 **/tmp/
 **/lib/
-**/doc/
 **/dep/
 *.tmp
 *.bak
