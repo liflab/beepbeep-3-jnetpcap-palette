@@ -70,9 +70,11 @@ public class PacketSource extends Source
   {
     PcapPacketArrayList packets = new PcapPacketArrayList();
     pcap.loop(1, jpacketHandler, packets);
-    Object[] out = new Object[1];
-    out[0] = packets.get(0);
-    outputs.add(out);
+    if (packets.isEmpty())
+    {
+      return false;
+    }
+    outputs.add(new Object[] {packets.get(0)});
     return true;
   }
 
