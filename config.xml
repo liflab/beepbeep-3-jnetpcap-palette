@@ -75,5 +75,14 @@
       </files>
       <bundle>true</bundle>
     </dependency>
+    <dependency>
+      <!-- Log4j. It is a Jnetpcap dependency. -->
+      <name>Log4j</name>
+      <classname>org.apache.logging.log4j.LogManager</classname>
+      <files>
+        <zip>http://apache.mirror.iweb.ca/logging/log4j/2.13.3/apache-log4j-2.13.3-bin.zip</zip>
+      </files>
+      <bundle>true</bundle>
+    </dependency>
   </dependencies>
 </build>
