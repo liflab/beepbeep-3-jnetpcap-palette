@@ -36,21 +36,24 @@
   <mainclass>netp.Main</mainclass>
 
   <!-- Installation folders -->
-  <srcdir>Source/src</srcdir>
+  <srcdir>src</srcdir>
   <libdir>lib</libdir>
-  <bindir>Source/bin</bindir>
-  <depdir>Source/dep</depdir>
+  <bindir>bin</bindir>
+  <depdir>dep</depdir>
   <docdir>docs/javadoc</docdir>
   <test>
-    <srcdir>Source/src</srcdir>
-    <bindir>Source/bin</bindir>
-    <depdir>Source/dep</depdir>
+    <srcdir>src</srcdir>
+    <bindir>bin</bindir>
+    <depdir>dep</depdir>
     <docdir>docs/javadoc</docdir>
   </test>
 
+  <!-- The JDK to compile with -->
+  <targetjdk>11</targetjdk>
+
   <!-- Output jar -->
   <jar>
-    <filename>../netp.jar</filename>
+    <filename>../netp</filename>
     <withdoc>false</withdoc>
   </jar>
 
@@ -58,6 +61,26 @@
     Write JAR dependencies here.
   -->
   <dependencies>
+	  <dependency>
+      <!-- Jnetpcap. It is hosted on SourceForge, but a direct download is
+           very unreliable. We instead depend on binaries hosted directly in the
+           repository. -->
+      <name>BeepBeep 3</name>
+      <classname>ca.uqac.lif.cep.Processor</classname>
+      <files>
+	      <jar>https://github.com/liflab/beepbeep-3/releases/download/v3.13/beepbeep-3.13.jar</jar>
+      </files>
+      <bundle>false</bundle>
+    </dependency>
+   	<dependency>
+     <name>JAXB</name>
+      <classname>jakarta.xml.bind.DataConverter</classname>
+      <files>
+	      <jar>https://repo1.maven.org/maven2/jakarta/xml/bind/jakarta.xml.bind-api/4.0.5/jakarta.xml.bind-api-4.0.5.jar</jar>
+      </files>
+      <bundle>true</bundle>
+    </dependency>
+ 
   	<dependency>
       <!-- Jnetpcap. It is hosted on SourceForge, but a direct download is
            very unreliable. We instead depend on binaries hosted directly in the
@@ -80,7 +103,7 @@
       <name>Log4j</name>
       <classname>org.apache.logging.log4j.LogManager</classname>
       <files>
-        <zip>http://apache.mirror.iweb.ca/logging/log4j/2.13.3/apache-log4j-2.13.3-bin.zip</zip>
+	      <zip>https://downloads.apache.org/logging/log4j/2.25.3/apache-log4j-2.25.3-bin.zip</zip>
       </files>
       <bundle>true</bundle>
     </dependency>
